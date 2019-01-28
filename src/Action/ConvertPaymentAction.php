@@ -2,28 +2,29 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\Payum\SPPLus\Action;
+namespace Yproximite\Payum\SystemPay\Action;
 
 use Payum\Core\Action\ActionInterface;
-use Payum\Core\Bridge\Spl\ArrayObject;
-use Payum\Core\GatewayAwareTrait;
-use Payum\Core\Request\Capture;
 use Payum\Core\Exception\RequestNotSupportedException;
+use Payum\Core\GatewayAwareTrait;
+use Payum\Core\Model\PaymentInterface;
+use Payum\Core\Request\Convert;
 
-class CaptureAction implements ActionInterface
+class ConvertPaymentAction implements ActionInterface
 {
     use GatewayAwareTrait;
 
     /**
      * {@inheritdoc}
      *
-     * @param Capture $request
+     * @param Convert $request
      */
     public function execute($request)
     {
         RequestNotSupportedException::assertSupports($this, $request);
 
-        $model = ArrayObject::ensureArrayObject($request->getModel());
+        /** @var PaymentInterface $payment */
+        $payment = $request->getSource();
 
         throw new \LogicException('Not implemented');
     }
@@ -34,8 +35,9 @@ class CaptureAction implements ActionInterface
     public function supports($request)
     {
         return
-            $request instanceof Capture &&
-            $request->getModel() instanceof \ArrayAccess
+            $request instanceof Convert &&
+            $request->getSource() instanceof PaymentInterface &&
+            'array' === $request->getTo()
         ;
     }
 }

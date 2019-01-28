@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\Payum\SPPLus\Action;
+namespace Yproximite\Payum\SystemPay\Action;
 
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
-use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\GatewayAwareTrait;
-use Payum\Core\Request\Refund;
+use Payum\Core\Request\Capture;
+use Payum\Core\Exception\RequestNotSupportedException;
 
-class RefundAction implements ActionInterface
+class CaptureAction implements ActionInterface
 {
     use GatewayAwareTrait;
 
     /**
      * {@inheritdoc}
      *
-     * @param Refund $request
+     * @param Capture $request
      */
     public function execute($request)
     {
@@ -34,7 +34,7 @@ class RefundAction implements ActionInterface
     public function supports($request)
     {
         return
-            $request instanceof Refund &&
+            $request instanceof Capture &&
             $request->getModel() instanceof \ArrayAccess
         ;
     }

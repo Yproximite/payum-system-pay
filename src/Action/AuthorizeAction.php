@@ -2,22 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\Payum\SPPLus\Action;
+namespace Yproximite\Payum\SystemPay\Action;
 
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
-use Payum\Core\Exception\RequestNotSupportedException;
+use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
-use Payum\Core\Request\Cancel;
+use Payum\Core\Request\Authorize;
+use Payum\Core\Exception\RequestNotSupportedException;
 
-class CancelAction implements ActionInterface
+class AuthorizeAction implements ActionInterface, GatewayAwareInterface
 {
     use GatewayAwareTrait;
 
     /**
      * {@inheritdoc}
      *
-     * @param Cancel $request
+     * @param Authorize $request
      */
     public function execute($request)
     {
@@ -34,7 +35,7 @@ class CancelAction implements ActionInterface
     public function supports($request)
     {
         return
-            $request instanceof Cancel &&
+            $request instanceof Authorize &&
             $request->getModel() instanceof \ArrayAccess
         ;
     }
