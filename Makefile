@@ -74,3 +74,6 @@ run-phpstan:
 
 run-php-cs-fixer:
 	php bin/php-cs-fixer fix
+
+run-php-cs-fixer@travis:
+	php bin/php-cs-fixer fix -v --diff --dry-run
