@@ -6,6 +6,7 @@ $finder = PhpCsFixer\Finder::create()
     ->name('*.php');
 
 return PhpCsFixer\Config::create()
+    ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
         'array_syntax' => [
@@ -21,5 +22,6 @@ return PhpCsFixer\Config::create()
         ],
         'heredoc_to_nowdoc' => false,
         'phpdoc_summary' => false,
+        'declare_strict_types' => true,
     ])
     ->setFinder($finder);
