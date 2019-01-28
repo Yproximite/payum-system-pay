@@ -1,24 +1,8 @@
 {
-    "name": "payum/skeleton",
-    "type": "project",
-    "description": "The Payum extension. Rapid extensino development",
-    "keywords": ["payment"],
-    "homepage": "https://payum.forma-pro.com",
+    "name": "yproximite/payum-spplus",
+    "description": "SP Plus gateway for Payum",
+    "keywords": ["payum", "payment", "sp plus"],
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Kotlyar Maksim",
-            "email": "kotlyar.maksim@gmail.com"
-        },
-        {
-            "name":     "Payum project",
-            "homepage": "https://payum.forma-pro.com/"
-        },
-        {
-            "name":     "Community contributions",
-            "homepage": "https://github.com/Payum/AuthorizeNetAim/contributors"
-        }
-    ],
     "require": {
         "payum/core": "^1.5"
     },
@@ -30,12 +14,6 @@
         "bin-dir": "bin"
     },
     "autoload": {
-        "psr-0": { "Payum\\Skeleton": "" }
-    },
-    "target-dir": "Payum/Skeleton",
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.5-dev"
-        }
+        "psr-0": { "Yproximite\\Payum\\SPPLus": "" }
     }
 }

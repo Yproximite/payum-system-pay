@@ -1,13 +1,13 @@
 <?php
-namespace Payum\Skeleton;
+namespace Yproximite\Payum\SPPLus;
 
-use Payum\Skeleton\Action\AuthorizeAction;
-use Payum\Skeleton\Action\CancelAction;
-use Payum\Skeleton\Action\ConvertPaymentAction;
-use Payum\Skeleton\Action\CaptureAction;
-use Payum\Skeleton\Action\NotifyAction;
-use Payum\Skeleton\Action\RefundAction;
-use Payum\Skeleton\Action\StatusAction;
+use Yproximite\Payum\SPPLus\Action\AuthorizeAction;
+use Yproximite\Payum\SPPLus\Action\CancelAction;
+use Yproximite\Payum\SPPLus\Action\ConvertPaymentAction;
+use Yproximite\Payum\SPPLus\Action\CaptureAction;
+use Yproximite\Payum\SPPLus\Action\NotifyAction;
+use Yproximite\Payum\SPPLus\Action\RefundAction;
+use Yproximite\Payum\SPPLus\Action\StatusAction;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
 
@@ -19,8 +19,8 @@ class SkeletonGatewayFactory extends GatewayFactory
     protected function populateConfig(ArrayObject $config)
     {
         $config->defaults([
-            'payum.factory_name' => 'skeleton',
-            'payum.factory_title' => 'skeleton',
+            'payum.factory_name' => 'sp_plus',
+            'payum.factory_title' => 'sp_plus',
             'payum.action.capture' => new CaptureAction(),
             'payum.action.authorize' => new AuthorizeAction(),
             'payum.action.refund' => new RefundAction(),
