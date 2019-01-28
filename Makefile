@@ -52,3 +52,10 @@ provision-nginx: provision
 ## Provision php
 provision-php: export ANSIBLE_TAGS = manala_php
 provision-php: provision
+
+#############
+## Commands #
+#############
+
+run-phpstan:
+	php bin/phpstan analyse Action Api.php SkeletonGatewayFactory.php --level max --autoload-file=vendor/autoload.php
