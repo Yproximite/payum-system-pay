@@ -1,0 +1,12 @@
+language: php
+php:
+  - 7.3
+
+notifications:
+  email: false
+
+install:
+  - composer install
+
+script:
+  - echo OK
