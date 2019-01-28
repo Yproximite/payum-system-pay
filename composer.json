@@ -1,5 +1,5 @@
 {
-    "name": "yproximite/payum-spplus",
+    "name": "yproximite/payum-system-pay",
     "description": "SP Plus gateway for Payum",
     "keywords": ["payum", "payment", "sp plus"],
     "license": "MIT",
