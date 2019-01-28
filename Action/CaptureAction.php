@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yproximite\Payum\SPPLus\Action;
 
 use Payum\Core\Action\ActionInterface;
@@ -12,7 +15,7 @@ class CaptureAction implements ActionInterface
     use GatewayAwareTrait;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param Capture $request
      */
@@ -26,7 +29,7 @@ class CaptureAction implements ActionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($request)
     {

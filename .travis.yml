@@ -10,3 +10,4 @@ install:
 
 script:
   - make run-phpstan
+  - make run-php-cs-fixer@travis

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yproximite\Payum\SPPLus\Action;
 
 use Payum\Core\Action\ActionInterface;
@@ -13,7 +16,7 @@ class AuthorizeAction implements ActionInterface, GatewayAwareInterface
     use GatewayAwareTrait;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param Authorize $request
      */
@@ -27,7 +30,7 @@ class AuthorizeAction implements ActionInterface, GatewayAwareInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($request)
     {

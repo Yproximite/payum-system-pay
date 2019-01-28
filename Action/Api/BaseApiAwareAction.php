@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yproximite\Payum\SPPLus\Action\Api;
 
 use Payum\Core\Action\ActionInterface;

@@ -8,3 +8,6 @@ ansible/roles/manala.*
 # Binaries
 bin/*
 !bin/.gitkeep
+
+# PHP-CS-Fixer
+.php_cs.cache

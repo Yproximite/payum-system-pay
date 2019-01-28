@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Yproximite\Payum\SPPLus\Action;
 
 use Payum\Core\Action\ActionInterface;
@@ -9,7 +12,7 @@ use Payum\Core\Exception\RequestNotSupportedException;
 class StatusAction implements ActionInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param GetStatusInterface $request
      */
@@ -23,7 +26,7 @@ class StatusAction implements ActionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($request)
     {

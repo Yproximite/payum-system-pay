@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yproximite\Payum\SPPLus;
 
 use Http\Message\MessageFactory;
@@ -49,6 +51,6 @@ class Api
 
     protected function getApiEndpoint(): string
     {
-        return $this->options['sandbox'] === true ? 'http://sandbox.example.com' : 'http://example.com';
+        return true === $this->options['sandbox'] ? 'http://sandbox.example.com' : 'http://example.com';
     }
 }
