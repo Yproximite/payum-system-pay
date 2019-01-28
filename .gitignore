@@ -4,3 +4,7 @@ vendor/
 .vagrant/
 ansible/roles/.downloads
 ansible/roles/manala.*
+
+# Binaries
+bin/*
+!bin/.gitkeep

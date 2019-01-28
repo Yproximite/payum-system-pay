@@ -1,0 +1,8 @@
+includes:
+	- vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+	ignoreErrors:
+	    # Payum interfaces
+		- '#Method Yproximite\\Payum\\SPPLus\\Action\\[A-Za-z]+Action::execute\(\) has no return typehint specified\.#'
+		- '#Method Yproximite\\Payum\\SPPLus\\SkeletonGatewayFactory::populateConfig\(\) has no return typehint specified\.#'
