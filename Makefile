@@ -29,6 +29,7 @@ help:
 setup:
 	vagrant up --no-provision
 	vagrant provision
+	vagrant ssh -- "cd /srv/app && make install-app"
 
 ## Update environment
 update: export ANSIBLE_TAGS = manala.update
@@ -53,9 +54,23 @@ provision-nginx: provision
 provision-php: export ANSIBLE_TAGS = manala_php
 provision-php: provision
 
-#############
-## Commands #
-#############
+############
+# Commands #
+############
+
+install-app: install-git-hooks
+	composer install
+
+install-git-hooks:
+	wget --output-document=.git/hooks/pre-commit https://gist.githubusercontent.com/tristanbes/6f968b45d40fbf9da144bf86f8846d32/raw/0dfc2c44a10678dbeaad29e538b8a6d2d00fa496/pre-commit
+	chmod +x .git/hooks/pre-commit
+
+############
+# Commands #
+############
 
 run-phpstan:
 	php bin/phpstan analyse Action Api.php SkeletonGatewayFactory.php --level max --autoload-file=vendor/autoload.php
+
+run-php-cs-fixer:
+	php bin/php-cs-fixer fix
