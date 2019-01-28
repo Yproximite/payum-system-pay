@@ -18,7 +18,14 @@
         "bin-dir": "bin"
     },
     "autoload": {
-        "psr-4": { "Yproximite\\Payum\\SPPLus\\": "" }
+        "psr-4": {
+            "Yproximite\\Payum\\SPPLus\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yproximite\\Payum\\SPPLus\\Tests\\": "tests/"
+        }
     },
     "archive": {
         "exclude": [
