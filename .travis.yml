@@ -5,6 +5,11 @@ php:
 notifications:
   email: false
 
+cache:
+  directories:
+    - ~/.composer/cache/files
+    - vendor
+
 install:
   - composer install
 
