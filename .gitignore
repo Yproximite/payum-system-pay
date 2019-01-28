@@ -1,1 +1,6 @@
 vendor/
+
+# VM & Ansible
+.vagrant/
+ansible/roles/.downloads
+ansible/roles/manala.*

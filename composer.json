@@ -15,5 +15,10 @@
     },
     "autoload": {
         "psr-0": { "Yproximite\\Payum\\SPPLus": "" }
+    },
+    "archive": {
+        "exclude": [
+            "ansible"
+        ]
     }
 }
