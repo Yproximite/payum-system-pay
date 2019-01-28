@@ -30,7 +30,7 @@ class SkeletonGatewayFactory extends GatewayFactory
             'payum.action.convert_payment' => new ConvertPaymentAction(),
         ]);
 
-        if (false == $config['payum.api']) {
+        if (false === $config['payum.api']) {
             $config['payum.default_options'] = array(
                 'sandbox' => true,
             );
