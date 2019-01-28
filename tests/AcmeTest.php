@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\Payum\SPPLus\Tests;
+namespace Yproximite\Payum\SystemPay\Tests;
 
 use PHPUnit\Framework\TestCase;
 

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\Payum\SPPLus;
+namespace Yproximite\Payum\SystemPay;
 
-use Yproximite\Payum\SPPLus\Action\AuthorizeAction;
-use Yproximite\Payum\SPPLus\Action\CancelAction;
-use Yproximite\Payum\SPPLus\Action\ConvertPaymentAction;
-use Yproximite\Payum\SPPLus\Action\CaptureAction;
-use Yproximite\Payum\SPPLus\Action\NotifyAction;
-use Yproximite\Payum\SPPLus\Action\RefundAction;
-use Yproximite\Payum\SPPLus\Action\StatusAction;
+use Yproximite\Payum\SystemPay\Action\AuthorizeAction;
+use Yproximite\Payum\SystemPay\Action\CancelAction;
+use Yproximite\Payum\SystemPay\Action\ConvertPaymentAction;
+use Yproximite\Payum\SystemPay\Action\CaptureAction;
+use Yproximite\Payum\SystemPay\Action\NotifyAction;
+use Yproximite\Payum\SystemPay\Action\RefundAction;
+use Yproximite\Payum\SystemPay\Action\StatusAction;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
 

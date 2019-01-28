@@ -70,7 +70,7 @@ install-git-hooks:
 ############
 
 run-phpstan:
-	php bin/phpstan analyse Action Api.php SkeletonGatewayFactory.php --level max --autoload-file=vendor/autoload.php
+	php bin/phpstan analyse src --level max --autoload-file=vendor/autoload.php
 
 run-phpunit:
 	php bin/phpunit

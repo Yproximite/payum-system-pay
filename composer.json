@@ -19,12 +19,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Yproximite\\Payum\\SPPLus\\": "src/"
+            "Yproximite\\Payum\\SystemPay\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Yproximite\\Payum\\SPPLus\\Tests\\": "tests/"
+            "Yproximite\\Payum\\SystemPay\\Tests\\": "tests/"
         }
     },
     "archive": {

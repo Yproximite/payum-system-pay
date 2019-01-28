@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\Payum\SPPLus\Action;
+namespace Yproximite\Payum\SystemPay\Action;
 
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
