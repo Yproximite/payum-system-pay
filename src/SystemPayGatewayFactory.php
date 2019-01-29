@@ -26,8 +26,8 @@ class SystemPayGatewayFactory extends GatewayFactory
     protected function populateConfig(ArrayObject $config)
     {
         $config->defaults([
-            'payum.factory_name'           => 'sp_plus',
-            'payum.factory_title'          => 'sp_plus',
+            'payum.factory_name'           => 'system_pay',
+            'payum.factory_title'          => 'system_pay',
             'payum.action.capture'         => new CaptureAction(),
             'payum.action.authorize'       => new AuthorizeAction(),
             'payum.action.refund'          => new RefundAction(),
@@ -37,9 +37,9 @@ class SystemPayGatewayFactory extends GatewayFactory
             'payum.action.convert_payment' => new ConvertPaymentAction(),
         ]);
 
-        if (false === $config['payum.api']) {
+        if (false === ($config['payum.api'] ?? false)) {
             $config['payum.default_options'] = [
-                'sandbox'             => true,
+                'sandbox'             => null,
                 'vads_site_id'        => null,
                 'vads_action_mode'    => ActionMode::INTERACTIVE,
                 'vads_page_action'    => PageAction::PAYMENT,

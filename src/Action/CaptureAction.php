@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yproximite\Payum\SystemPay\Action;
 
 use Payum\Core\Action\ActionInterface;
+use Payum\Core\ApiAwareInterface;
 use Payum\Core\ApiAwareTrait;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayAwareTrait;
@@ -12,7 +13,7 @@ use Payum\Core\Request\Capture;
 use Payum\Core\Exception\RequestNotSupportedException;
 use Yproximite\Payum\SystemPay\Api;
 
-class CaptureAction implements ActionInterface
+class CaptureAction implements ActionInterface, ApiAwareInterface
 {
     use GatewayAwareTrait;
     use ApiAwareTrait;
@@ -32,7 +33,6 @@ class CaptureAction implements ActionInterface
         RequestNotSupportedException::assertSupports($this, $request);
 
         $details = ArrayObject::ensureArrayObject($request->getModel());
-        var_dump($details);
 
         $this->api->doPayment((array) $details);
     }

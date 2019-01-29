@@ -43,9 +43,10 @@ class Api
 
     public function doPayment(array $details)
     {
+        dump($this->options, $details);
         $fields = [
             'vads_site_id'        => $this->options['vads_site_id'],
-            'vads_ctx_mode'       => $this->options['vads_ctx_mode'],
+            'vads_ctx_mode'       => $this->getContextMode(),
             'vads_trans_id'       => $details['vads_trans_id'],
             'vads_trans_date'     => $details['vads_trans_date'],
             'vads_amount'         => $details['vads_amount'],
