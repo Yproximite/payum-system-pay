@@ -9,7 +9,8 @@ namespace Yproximite\Payum\SystemPay\Enum;
  */
 final class PaymentConfig
 {
-    public const V2 = 'V2';
+    public const SINGLE = 'SINGLE';
+    public const MULTI  = 'MULTI';
 
     private function __construct()
     {
