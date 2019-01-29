@@ -18,7 +18,7 @@ use Yproximite\Payum\SystemPay\Enum\PageAction;
 use Yproximite\Payum\SystemPay\Enum\PaymentConfig;
 use Yproximite\Payum\SystemPay\Enum\Version;
 
-class SkeletonGatewayFactory extends GatewayFactory
+class SystemPayGatewayFactory extends GatewayFactory
 {
     /**
      * {@inheritdoc}
