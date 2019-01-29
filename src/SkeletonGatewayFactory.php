@@ -14,9 +14,9 @@ use Yproximite\Payum\SystemPay\Action\StatusAction;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
 use Yproximite\Payum\SystemPay\Enum\ActionMode;
-use Yproximite\Payum\SystemPay\Enum\ContextMode;
 use Yproximite\Payum\SystemPay\Enum\PageAction;
 use Yproximite\Payum\SystemPay\Enum\PaymentConfig;
+use Yproximite\Payum\SystemPay\Enum\Version;
 
 class SkeletonGatewayFactory extends GatewayFactory
 {
@@ -39,20 +39,21 @@ class SkeletonGatewayFactory extends GatewayFactory
 
         if (false === $config['payum.api']) {
             $config['payum.default_options'] = [
-                'vads_site_id'          => null,
-                'vads_ctx_mode'         => ContextMode::TEST,
-                'vads_action_mode'      => ActionMode::INTERACTIVE,
-                'vads_page_action'      => PageAction::PAYMENT,
-                'vads_payment_config'   => PaymentConfig::V2,
-                'certif_test'           => null,
-                'certif_prod'           => null,
-                'url_notif_ok'          => null,
-                'url_notif_ko'          => null,
+                'sandbox'             => true,
+                'vads_site_id'        => null,
+                'vads_action_mode'    => ActionMode::INTERACTIVE,
+                'vads_page_action'    => PageAction::PAYMENT,
+                'vads_payment_config' => PaymentConfig::SINGLE,
+                'vads_version'        => Version::V2,
+                'certif_test'         => null,
+                'certif_prod'         => null,
+                'url_notif_ok'        => null,
+                'url_notif_ko'        => null,
             ];
             $config->defaults($config['payum.default_options']);
             $config['payum.required_options'] = [
+                'sandbox',
                 'vads_site_id',
-                'vads_ctx_mode',
                 'vads_action_mode',
                 'vads_page_action',
                 'vads_payment_config',
