@@ -7,13 +7,14 @@ namespace Yproximite\Payum\SystemPay\Action;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
+use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Model\PaymentInterface;
 use Payum\Core\Request\Convert;
 use Payum\Core\Request\GetCurrency;
 use Yproximite\Payum\SystemPay\Enum\RequestParam;
 
-class ConvertPaymentAction implements ActionInterface
+class ConvertPaymentAction implements ActionInterface, GatewayAwareInterface
 {
     use GatewayAwareTrait;
 
@@ -37,7 +38,6 @@ class ConvertPaymentAction implements ActionInterface
         $this->gateway->execute($currency = new GetCurrency($payment->getCurrencyCode()));
         $details[RequestParam::VADS_CURRENCY] = $currency->numeric;
 
-        dump($details);
         $request->setResult((array) $details);
     }
 
@@ -46,8 +46,6 @@ class ConvertPaymentAction implements ActionInterface
      */
     public function supports($request)
     {
-        dump($request, $request->getSource(), $request->getTo());
-
         return
             $request instanceof Convert &&
             $request->getSource() instanceof PaymentInterface &&

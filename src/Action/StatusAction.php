@@ -22,7 +22,8 @@ class StatusAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        throw new \LogicException('Not implemented');
+        $request->markNew();
+        // TODO: Add checks on "vads_result" and "vads_payment_error"
     }
 
     /**
