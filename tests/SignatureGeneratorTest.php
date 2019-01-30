@@ -10,7 +10,7 @@ use Yproximite\Payum\SystemPay\SignatureGenerator;
 class SignatureGeneratorTest extends TestCase
 {
     /**
-     * @dataProvider testGenerateDataProvider
+     * @dataProvider provideTestGenerate
      */
     public function testGenerate(string $expectedSignature, string $certificate, array $fields)
     {
@@ -21,7 +21,7 @@ class SignatureGeneratorTest extends TestCase
         $this->assertEquals($expectedSignature, $signature);
     }
 
-    public function testGenerateDataProvider()
+    public function provideTestGenerate()
     {
         // https://www.ocl.natixis.com/systempay/public/uploads/fichier/Guide_d_implementation_formulaire_paiement_Systempay_v3.2018122018144810.pdf
         yield [
