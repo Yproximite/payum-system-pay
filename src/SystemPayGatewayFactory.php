@@ -16,6 +16,7 @@ use Payum\Core\GatewayFactory;
 use Yproximite\Payum\SystemPay\Enum\ActionMode;
 use Yproximite\Payum\SystemPay\Enum\PageAction;
 use Yproximite\Payum\SystemPay\Enum\PaymentConfig;
+use Yproximite\Payum\SystemPay\Enum\RequestParam;
 use Yproximite\Payum\SystemPay\Enum\Version;
 
 class SystemPayGatewayFactory extends GatewayFactory
@@ -39,24 +40,24 @@ class SystemPayGatewayFactory extends GatewayFactory
 
         if (false === ($config['payum.api'] ?? false)) {
             $config['payum.default_options'] = [
-                'sandbox'             => null,
-                'vads_site_id'        => null,
-                'vads_action_mode'    => ActionMode::INTERACTIVE,
-                'vads_page_action'    => PageAction::PAYMENT,
-                'vads_payment_config' => PaymentConfig::SINGLE,
-                'vads_version'        => Version::V2,
-                'certif_test'         => null,
-                'certif_prod'         => null,
-                'url_notif_ok'        => null,
-                'url_notif_ko'        => null,
+                RequestParam::VADS_SITE_ID        => null,
+                RequestParam::VADS_ACTION_MODE    => ActionMode::INTERACTIVE,
+                RequestParam::VADS_PAGE_ACTION    => PageAction::PAYMENT,
+                RequestParam::VADS_PAYMENT_CONFIG => PaymentConfig::SINGLE,
+                RequestParam::VADS_VERSION        => Version::V2,
+                'sandbox'                         => null,
+                'certif_prod'                     => null,
+                'certif_test'                     => null,
+                'url_notif_ok'                    => null,
+                'url_notif_ko'                    => null,
             ];
             $config->defaults($config['payum.default_options']);
             $config['payum.required_options'] = [
+                RequestParam::VADS_SITE_ID,
+                RequestParam::VADS_ACTION_MODE,
+                RequestParam::VADS_PAGE_ACTION,
+                RequestParam::VADS_PAYMENT_CONFIG,
                 'sandbox',
-                'vads_site_id',
-                'vads_action_mode',
-                'vads_page_action',
-                'vads_payment_config',
                 'certif_test',
                 'certif_prod',
             ];

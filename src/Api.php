@@ -10,6 +10,7 @@ use Payum\Core\HttpClientInterface;
 use Payum\Core\Reply\HttpPostRedirect;
 use Psr\Http\Message\ResponseInterface;
 use Yproximite\Payum\SystemPay\Enum\ContextMode;
+use Yproximite\Payum\SystemPay\Enum\RequestParam;
 
 class Api
 {
@@ -45,16 +46,16 @@ class Api
     {
         dump($this->options, $details);
         $fields = [
-            'vads_site_id'        => $this->options['vads_site_id'],
-            'vads_ctx_mode'       => $this->getContextMode(),
-            'vads_trans_id'       => $details['vads_trans_id'],
-            'vads_trans_date'     => $details['vads_trans_date'],
-            'vads_amount'         => $details['vads_amount'],
-            'vads_currency'       => $details['vads_currency'],
-            'vads_action_mode'    => $this->options['vads_action_mode'],
-            'vads_page_action'    => $this->options['vads_page_action'],
-            'vads_payment_config' => $this->options['vads_payment_config'],
-            'vads_version'        => $this->options['vads_version'],
+            RequestParam::VADS_SITE_ID        => $this->options[RequestParam::VADS_SITE_ID],
+            RequestParam::VADS_CTX_MODE       => $this->getContextMode(),
+            RequestParam::VADS_TRANS_ID       => $details[RequestParam::VADS_TRANS_ID],
+            RequestParam::VADS_TRANS_DATE     => $details[RequestParam::VADS_TRANS_DATE],
+            RequestParam::VADS_AMOUNT         => $details[RequestParam::VADS_AMOUNT],
+            RequestParam::VADS_CURRENCY       => $details[RequestParam::VADS_CURRENCY],
+            RequestParam::VADS_ACTION_MODE    => $this->options[RequestParam::VADS_ACTION_MODE],
+            RequestParam::VADS_PAGE_ACTION    => $this->options[RequestParam::VADS_PAGE_ACTION],
+            RequestParam::VADS_PAYMENT_CONFIG => $this->options[RequestParam::VADS_PAYMENT_CONFIG],
+            RequestParam::VADS_VERSION        => $this->options[RequestParam::VADS_VERSION],
         ];
 
         $fields['signature'] = $this->signatureGenerator->generate($fields, $this->getCertificate());

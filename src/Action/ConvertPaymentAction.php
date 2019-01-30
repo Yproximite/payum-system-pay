@@ -11,6 +11,7 @@ use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Model\PaymentInterface;
 use Payum\Core\Request\Convert;
 use Payum\Core\Request\GetCurrency;
+use Yproximite\Payum\SystemPay\Enum\RequestParam;
 
 class ConvertPaymentAction implements ActionInterface
 {
@@ -27,15 +28,16 @@ class ConvertPaymentAction implements ActionInterface
 
         /** @var PaymentInterface $payment */
         $payment = $request->getSource();
+        $details = ArrayObject::ensureArrayObject($payment->getDetails());
+
+        $details[RequestParam::VADS_TRANS_ID]   = $payment->getNumber();
+        $details[RequestParam::VADS_TRANS_DATE] = gmdate('YmdHis');
+        $details[RequestParam::VADS_AMOUNT]     = $payment->getTotalAmount();
 
         $this->gateway->execute($currency = new GetCurrency($payment->getCurrencyCode()));
+        $details[RequestParam::VADS_CURRENCY] = $currency->numeric;
 
-        $details                    = ArrayObject::ensureArrayObject($payment->getDetails());
-        $details['vads_trans_id']   = null; // TODO
-        $details['vads_trans_date'] = gmdate('YmdHis');
-        $details['vads_amount']     = $payment->getTotalAmount();
-        $details['vads_currency']   = $currency->numeric;
-
+        dump($details);
         $request->setResult((array) $details);
     }
 
@@ -44,10 +46,11 @@ class ConvertPaymentAction implements ActionInterface
      */
     public function supports($request)
     {
+        dump($request, $request->getSource(), $request->getTo());
+
         return
             $request instanceof Convert &&
             $request->getSource() instanceof PaymentInterface &&
-            'array' === $request->getTo()
-        ;
+            'array' === $request->getTo();
     }
 }
