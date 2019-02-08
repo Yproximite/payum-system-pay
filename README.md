@@ -1,22 +1,22 @@
-# Payum System Pay
+# Payum System Pay
 
 > A Payum gateway to use SystemPay (French payment system)
 
 [![Build Status](https://travis-ci.com/Yproximite/payum-system-pay.svg?token=pNBs2oaRpfxdyhqWf28h&branch=master)](https://travis-ci.com/Yproximite/payum-system-pay)
 
-## Requirements
+## Requirements
 
 - PHP 7.2+
 - [Payum](https://github.com/Payum/Payum)
 - Optionally [PayumBundle](https://github.com/Payum/PayumBundle) and Symfony 3 or 4+
 
-## Installation
+## Installation
 
 ```bash
 $ composer require yproximite/payum-system-pay
 ```
 
-## Configuration
+## Configuration
 
 ### With PayumBundle (Symfony)
 
