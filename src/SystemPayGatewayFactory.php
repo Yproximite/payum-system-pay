@@ -24,7 +24,7 @@ class SystemPayGatewayFactory extends GatewayFactory
     /**
      * {@inheritdoc}
      */
-    protected function populateConfig(ArrayObject $config)
+    protected function populateConfig(ArrayObject $config): void
     {
         $config->defaults([
             'payum.factory_name'           => 'system_pay',

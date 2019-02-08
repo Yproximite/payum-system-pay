@@ -42,9 +42,10 @@ class Api
         $this->messageFactory     = $messageFactory;
     }
 
-    public function doPayment(array $details)
+    public function doPayment(array $details): void
     {
-        dump($this->options, $details);
+        var_dump($this->options, $details);
+
         $fields = [
             RequestParam::VADS_SITE_ID        => $this->options[RequestParam::VADS_SITE_ID],
             RequestParam::VADS_CTX_MODE       => $this->getContextMode(),
@@ -83,9 +84,11 @@ class Api
         return 'https://paiement.systempay.fr/vads-payment/';
     }
 
-    protected function getContextMode()
+    protected function getContextMode(): string
     {
-        return true === $this->options['sandbox'] ? ContextMode::TEST : ContextMode::PRODUCTION;
+        return true === $this->options['sandbox']
+            ? ContextMode::TEST
+            : ContextMode::PRODUCTION;
     }
 
     protected function getCertificate(): string

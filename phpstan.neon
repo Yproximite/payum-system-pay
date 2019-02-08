@@ -5,4 +5,3 @@ parameters:
 	ignoreErrors:
 	    # Payum interfaces
 		- '#Method Yproximite\\Payum\\SystemPay\\Action\\[A-Za-z]+Action::execute\(\) has no return typehint specified\.#'
-		- '#Method Yproximite\\Payum\\SystemPay\\SkeletonGatewayFactory::populateConfig\(\) has no return typehint specified\.#'
