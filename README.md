@@ -1,7 +1,8 @@
 # Payum System Pay
 
-> A Payum gateway to use SystemPay (French payment system)
+> A Payum gateway to use [SystemPay](https://paiement.systempay.fr) (a French payment system)
 
+[![Latest Stable Version](https://poser.pugx.org/yproximite/payum-system-pay/version)](https://packagist.org/packages/yproximite/payum-system-pay)
 [![Build Status](https://travis-ci.com/Yproximite/payum-system-pay.svg?token=pNBs2oaRpfxdyhqWf28h&branch=master)](https://travis-ci.com/Yproximite/payum-system-pay)
 
 ## Requirements
