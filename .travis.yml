@@ -1,7 +1,5 @@
+dist: trusty
 language: php
-php:
-  - 7.2
-  - 7.3
 
 notifications:
   email: false
@@ -11,10 +9,22 @@ cache:
     - ~/.composer/cache/files
     - vendor
 
+jobs:
+  include:
+    - php: 7.2
+      env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
+    - php: 7.3
+      env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
+    - php: 7.3
+
+before_install:
+  - phpenv config-rm xdebug.ini
+
 install:
-  - composer install
+  - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
 
 script:
+  - make run-composer-validate
   - make run-phpstan
   - make run-phpunit
   - make run-php-cs-fixer@travis
