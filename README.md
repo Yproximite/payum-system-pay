@@ -7,6 +7,7 @@
 ## Requirements
 
 - PHP 7.2+
+- [Payum](https://github.com/Payum/Payum)
 - Optionally [PayumBundle](https://github.com/Payum/PayumBundle) and Symfony 3 or 4+
 
 ## Installation
