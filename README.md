@@ -1,80 +1,73 @@
-<h2 align="center">Supporting Payum</h2>
+# Payum System Pay
 
-Payum is an MIT-licensed open source project with its ongoing development made possible entirely by the support of community and our customers. If you'd like to join them, please consider:
+> A Payum gateway to use SystemPay (French payment system)
 
-- [Become a sponsor](https://www.patreon.com/makasim)
-- [Become our client](http://forma-pro.com/)
+[![Build Status](https://travis-ci.com/Yproximite/payum-system-pay.svg?token=pNBs2oaRpfxdyhqWf28h&branch=master)](https://travis-ci.com/Yproximite/payum-system-pay)
 
----
+## Requirements
 
-# Skeleton
+- PHP 7.2+
+- [Payum](https://github.com/Payum/Payum)
+- Optionally [PayumBundle](https://github.com/Payum/PayumBundle) and Symfony 3 or 4+
 
-The Payum extension to rapidly build new extensions.
-
-1. Create new project
+## Installation
 
 ```bash
-$ composer create-project payum/skeleton
+$ composer require yproximite/payum-system-pay
 ```
 
-2. Replace all occurrences of `payum` with your vendor name. It may be your github name, for now let's say you choose: `acme`.
-3. Replace all occurrences of `skeleton` with a payment gateway name. For example Stripe, Paypal etc. For now let's say you choose: `paypal`.
-4. Register a gateway factory to the payum's builder and create a gateway:
+## Configuration
+
+### With PayumBundle (Symfony)
+
+First register the gateway factory in your services definition:
+```yaml
+# config/services.yaml or app/config/services.yml
+services:
+    yproximite.system_pay_gateway_factory:
+        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        arguments: [Yproximite\Payum\SystemPay\SystemPayGatewayFactory]
+        tags:
+            - { name: payum.gateway_factory_builder, factory: system_pay }
+```
+
+Then configure the gateway:
+
+```yaml
+# config/packages/payum.yaml or app/config/config.yml
+
+payum:
+  gateways:
+    system_pay:
+      factory: system_pay
+      vads_site_id: 'change it' # required 
+      certif_prod: 'change it' # required 
+      certif_test: 'change it' # required 
+      sandbox: true
+
+```
+
+### With Payum
 
 ```php
 <?php
+//config.php
 
 use Payum\Core\PayumBuilder;
-use Payum\Core\GatewayFactoryInterface;
+use Payum\Core\Payum;
 
-$defaultConfig = [];
+/** @var Payum $payum */
+$payum = (new PayumBuilder())
+    ->addDefaultStorages()
 
-$payum = (new PayumBuilder)
-    ->addGatewayFactory('paypal', function(array $config, GatewayFactoryInterface $coreGatewayFactory) {
-        return new \Acme\Paypal\PaypalGatewayFactory($config, $coreGatewayFactory);
-    })
-
-    ->addGateway('paypal', [
-        'factory' => 'paypal',
-        'sandbox' => true,
+    ->addGateway('gatewayName', [
+        'factory' => 'system_may',
+        'vads_site_id' => 'change it',
+        'certif_prod'  => 'change it',
+        'certif_test'  => 'change it',
+        'sandbox'      => true,
     ])
 
     ->getPayum()
 ;
 ```
-
-5. While using the gateway implement all method where you get `Not implemented` exception:
-
-```php
-<?php
-
-use Payum\Core\Request\Capture;
-
-$paypal = $payum->getGateway('paypal');
-
-$model = new \ArrayObject([
-  // ...
-]);
-
-$paypal->execute(new Capture($model));
-```
-
-## Resources
-
-* [Site](https://payum.forma-pro.com/)
-* [Documentation](https://github.com/Payum/Payum/blob/master/docs/index.md#general)
-* [Questions](http://stackoverflow.com/questions/tagged/payum)
-* [Issue Tracker](https://github.com/Payum/Payum/issues)
-* [Twitter](https://twitter.com/payumphp)
-
-## Developed by Forma-Pro
-
-Forma-Pro is a full stack development company which interests also spread to open source development. 
-Being a team of strong professionals we have an aim an ability to help community by developing cutting edge solutions in the areas of e-commerce, docker & microservice oriented architecture where we have accumulated a huge many-years experience. 
-Our main specialization is Symfony framework based solution, but we are always looking to the technologies that allow us to do our job the best way. We are committed to creating solutions that revolutionize the way how things are developed in aspects of architecture & scalability.
-
-If you have any questions and inquires about our open source development, this product particularly or any other matter feel free to contact at opensource@forma-pro.com
-
-## License
-
-Skeleton is released under the [MIT License](LICENSE).

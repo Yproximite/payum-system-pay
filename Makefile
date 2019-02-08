@@ -80,3 +80,6 @@ run-php-cs-fixer:
 
 run-php-cs-fixer@travis:
 	php bin/php-cs-fixer fix -v --diff --dry-run
+
+run-composer-validate:
+	composer validate --strict
