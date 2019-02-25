@@ -44,8 +44,6 @@ class Api
 
     public function doPayment(array $details): void
     {
-        var_dump($this->options, $details);
-
         $fields = [
             RequestParam::VADS_SITE_ID        => $this->options[RequestParam::VADS_SITE_ID],
             RequestParam::VADS_CTX_MODE       => $this->getContextMode(),
