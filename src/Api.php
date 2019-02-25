@@ -44,22 +44,16 @@ class Api
 
     public function doPayment(array $details): void
     {
-        $fields = [
-            RequestParam::VADS_SITE_ID        => $this->options[RequestParam::VADS_SITE_ID],
-            RequestParam::VADS_CTX_MODE       => $this->getContextMode(),
-            RequestParam::VADS_TRANS_ID       => $details[RequestParam::VADS_TRANS_ID],
-            RequestParam::VADS_TRANS_DATE     => $details[RequestParam::VADS_TRANS_DATE],
-            RequestParam::VADS_AMOUNT         => $details[RequestParam::VADS_AMOUNT],
-            RequestParam::VADS_CURRENCY       => $details[RequestParam::VADS_CURRENCY],
-            RequestParam::VADS_ACTION_MODE    => $this->options[RequestParam::VADS_ACTION_MODE],
-            RequestParam::VADS_PAGE_ACTION    => $this->options[RequestParam::VADS_PAGE_ACTION],
-            RequestParam::VADS_PAYMENT_CONFIG => $details[RequestParam::VADS_PAYMENT_CONFIG] ?? $this->options[RequestParam::VADS_PAYMENT_CONFIG],
-            RequestParam::VADS_VERSION        => $this->options[RequestParam::VADS_VERSION],
-        ];
+        $details[RequestParam::VADS_CTX_MODE]       = $this->getOption($details, RequestParam::VADS_CTX_MODE) ?? $this->getContextMode();
+        $details[RequestParam::VADS_SITE_ID]        = $this->getOption($details, RequestParam::VADS_SITE_ID);
+        $details[RequestParam::VADS_ACTION_MODE]    = $this->getOption($details, RequestParam::VADS_ACTION_MODE);
+        $details[RequestParam::VADS_PAGE_ACTION]    = $this->getOption($details, RequestParam::VADS_PAGE_ACTION);
+        $details[RequestParam::VADS_PAYMENT_CONFIG] = $this->getOption($details, RequestParam::VADS_PAYMENT_CONFIG);
+        $details[RequestParam::VADS_VERSION]        = $this->getOption($details, RequestParam::VADS_VERSION);
 
-        $fields['signature'] = $this->signatureGenerator->generate($fields, $this->getCertificate());
+        $details['signature'] = $this->signatureGenerator->generate($details, $this->getCertificate());
 
-        throw new HttpPostRedirect($this->getApiEndpoint(), $fields);
+        throw new HttpPostRedirect($this->getApiEndpoint(), $details);
     }
 
     protected function doRequest(string $method, array $fields): ResponseInterface
@@ -94,5 +88,21 @@ class Api
         return ContextMode::PRODUCTION === $this->getContextMode()
             ? $this->options['certif_prod']
             : $this->options['certif_test'];
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getOption(array $details, string $name)
+    {
+        if (array_key_exists($name, $details)) {
+            return $details[$name];
+        }
+
+        if (array_key_exists($name, $this->options)) {
+            return $this->options[$name];
+        }
+
+        return null;
     }
 }
