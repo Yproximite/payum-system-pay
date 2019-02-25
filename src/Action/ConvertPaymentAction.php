@@ -31,7 +31,7 @@ class ConvertPaymentAction implements ActionInterface, GatewayAwareInterface
         $payment = $request->getSource();
         $details = ArrayObject::ensureArrayObject($payment->getDetails());
 
-        $details[RequestParam::VADS_TRANS_ID]   = $payment->getNumber();
+        $details[RequestParam::VADS_TRANS_ID]   = sprintf('%06d', $payment->getNumber());
         $details[RequestParam::VADS_TRANS_DATE] = gmdate('YmdHis');
         $details[RequestParam::VADS_AMOUNT]     = $payment->getTotalAmount();
 

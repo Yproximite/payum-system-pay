@@ -72,3 +72,41 @@ $payum = (new PayumBuilder())
     ->getPayum()
 ;
 ```
+
+## Usage
+
+Make sure your `Payment` entity overrides `getNumber()` method like this:
+```php
+<?php
+
+namespace App\Entity\Payment;
+
+use Doctrine\ORM\Mapping as ORM;
+use Payum\Core\Model\Payment as BasePayment;
+
+/**
+ * @ORM\Table
+ * @ORM\Entity
+ */
+class Payment extends BasePayment
+{
+    /**
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     *
+     * @var int
+     */
+    protected $id;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getNumber()
+    {
+        return (string) $this->id;
+    }
+}
+```
+
+By doing this, the library will be able to pick the payment's id and use it for the payment with System Pay (we should send a transaction id between `000000` and `999999`). 
