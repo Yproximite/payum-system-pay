@@ -9,7 +9,8 @@
         "phpstan/phpstan": "^0.11.1",
         "phpstan/phpstan-strict-rules": "^0.11.0",
         "friendsofphp/php-cs-fixer": "^2.14",
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^7.5",
+        "twig/twig": "^2.6"
     },
     "config": {
         "bin-dir": "bin"
