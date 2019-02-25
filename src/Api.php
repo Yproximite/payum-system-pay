@@ -53,7 +53,7 @@ class Api
             RequestParam::VADS_CURRENCY       => $details[RequestParam::VADS_CURRENCY],
             RequestParam::VADS_ACTION_MODE    => $this->options[RequestParam::VADS_ACTION_MODE],
             RequestParam::VADS_PAGE_ACTION    => $this->options[RequestParam::VADS_PAGE_ACTION],
-            RequestParam::VADS_PAYMENT_CONFIG => $this->options[RequestParam::VADS_PAYMENT_CONFIG],
+            RequestParam::VADS_PAYMENT_CONFIG => $details[RequestParam::VADS_PAYMENT_CONFIG] ?? $this->options[RequestParam::VADS_PAYMENT_CONFIG],
             RequestParam::VADS_VERSION        => $this->options[RequestParam::VADS_VERSION],
         ];
 

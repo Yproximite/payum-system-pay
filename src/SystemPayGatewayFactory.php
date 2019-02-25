@@ -56,7 +56,6 @@ class SystemPayGatewayFactory extends GatewayFactory
                 RequestParam::VADS_SITE_ID,
                 RequestParam::VADS_ACTION_MODE,
                 RequestParam::VADS_PAGE_ACTION,
-                RequestParam::VADS_PAYMENT_CONFIG,
                 'sandbox',
                 'certif_test',
                 'certif_prod',

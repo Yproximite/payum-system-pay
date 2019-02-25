@@ -64,7 +64,6 @@ class SystemPayGatewayFactoryTest extends \PHPUnit\Framework\TestCase
             'vads_site_id',
             'vads_action_mode',
             'vads_page_action',
-            'vads_payment_config',
             'sandbox',
             'certif_test',
             'certif_prod',
