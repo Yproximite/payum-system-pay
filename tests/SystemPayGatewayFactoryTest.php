@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yproximite\Payum\SystemPay\Tests;
 
+use Payum\Core\Bridge\Spl\ArrayObject;
 use Yproximite\Payum\SystemPay\SystemPayGatewayFactory;
 
 class SystemPayGatewayFactoryTest extends \PHPUnit\Framework\TestCase
@@ -42,12 +43,14 @@ class SystemPayGatewayFactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('system_pay', $config['payum.factory_name']);
         $this->assertSame('system_pay', $config['payum.factory_title']);
 
+        $this->assertInstanceOf('Yproximite\Payum\SystemPay\Request\RequestStatusApplier', $config['payum.request_status_applier']);
+
         $this->assertInstanceOf('Yproximite\Payum\SystemPay\Action\CaptureAction', $config['payum.action.capture']);
         $this->assertInstanceOf('Yproximite\Payum\SystemPay\Action\AuthorizeAction', $config['payum.action.authorize']);
         $this->assertInstanceOf('Yproximite\Payum\SystemPay\Action\RefundAction', $config['payum.action.refund']);
         $this->assertInstanceOf('Yproximite\Payum\SystemPay\Action\CancelAction', $config['payum.action.cancel']);
         $this->assertInstanceOf('Yproximite\Payum\SystemPay\Action\NotifyAction', $config['payum.action.notify']);
-        $this->assertInstanceOf('Yproximite\Payum\SystemPay\Action\StatusAction', $config['payum.action.status']);
+        $this->assertInstanceOf('Yproximite\Payum\SystemPay\Action\StatusAction', $config['payum.action.status'](ArrayObject::ensureArrayObject($config)));
         $this->assertInstanceOf('Yproximite\Payum\SystemPay\Action\ConvertPaymentAction', $config['payum.action.convert_payment']);
 
         $this->assertNull($config['payum.default_options']['vads_site_id']);

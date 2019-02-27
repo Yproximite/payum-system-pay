@@ -18,6 +18,7 @@ use Yproximite\Payum\SystemPay\Enum\PageAction;
 use Yproximite\Payum\SystemPay\Enum\PaymentConfig;
 use Yproximite\Payum\SystemPay\Enum\RequestParam;
 use Yproximite\Payum\SystemPay\Enum\Version;
+use Yproximite\Payum\SystemPay\Request\RequestStatusApplier;
 
 class SystemPayGatewayFactory extends GatewayFactory
 {
@@ -34,8 +35,11 @@ class SystemPayGatewayFactory extends GatewayFactory
             'payum.action.refund'          => new RefundAction(),
             'payum.action.cancel'          => new CancelAction(),
             'payum.action.notify'          => new NotifyAction(),
-            'payum.action.status'          => new StatusAction(),
+            'payum.action.status'          => function (ArrayObject $config) {
+                return new StatusAction($config['payum.request_status_applier']);
+            },
             'payum.action.convert_payment' => new ConvertPaymentAction(),
+            'payum.request_status_applier' => new RequestStatusApplier(),
         ]);
 
         if (false === ($config['payum.api'] ?? false)) {

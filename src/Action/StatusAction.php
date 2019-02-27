@@ -5,12 +5,22 @@ declare(strict_types=1);
 namespace Yproximite\Payum\SystemPay\Action;
 
 use Payum\Core\Action\ActionInterface;
-use Payum\Core\Request\GetStatusInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
+use Payum\Core\Request\GetStatusInterface;
+use Yproximite\Payum\SystemPay\Enum\ResponseParams;
+use Yproximite\Payum\SystemPay\Request\RequestStatusApplier;
 
 class StatusAction implements ActionInterface
 {
+    /** @var RequestStatusApplier */
+    private $requestStatusApplier;
+
+    public function __construct(RequestStatusApplier $requestStatusApplier)
+    {
+        $this->requestStatusApplier = $requestStatusApplier;
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -22,8 +32,7 @@ class StatusAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        $request->markNew();
-        // TODO: Add checks on "vads_result" and "vads_payment_error"
+        $this->requestStatusApplier->apply($model[ResponseParams::VADS_TRANS_STATUS] ?? null, $request);
     }
 
     /**
@@ -33,7 +42,6 @@ class StatusAction implements ActionInterface
     {
         return
             $request instanceof GetStatusInterface &&
-            $request->getModel() instanceof \ArrayAccess
-        ;
+            $request->getModel() instanceof \ArrayAccess;
     }
 }
