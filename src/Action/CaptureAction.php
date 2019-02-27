@@ -8,16 +8,21 @@ use Payum\Core\Action\ActionInterface;
 use Payum\Core\ApiAwareInterface;
 use Payum\Core\ApiAwareTrait;
 use Payum\Core\Bridge\Spl\ArrayObject;
+use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Request\Capture;
-use Payum\Core\Exception\RequestNotSupportedException;
+use Payum\Core\Security\GenericTokenFactoryAwareInterface;
+use Payum\Core\Security\GenericTokenFactoryAwareTrait;
+use Payum\Core\Security\TokenInterface;
 use Yproximite\Payum\SystemPay\Api;
+use Yproximite\Payum\SystemPay\Enum\RequestParam;
 
-class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
+class CaptureAction implements ActionInterface, ApiAwareInterface, GatewayAwareInterface, GenericTokenFactoryAwareInterface
 {
-    use GatewayAwareTrait;
     use ApiAwareTrait;
+    use GatewayAwareTrait;
+    use GenericTokenFactoryAwareTrait;
 
     public function __construct()
     {
@@ -34,6 +39,16 @@ class CaptureAction implements ActionInterface, GatewayAwareInterface, ApiAwareI
         RequestNotSupportedException::assertSupports($this, $request);
 
         $details = ArrayObject::ensureArrayObject($request->getModel());
+
+        if (null === $details->get(RequestParam::VADS_URL_CHECK) && $request->getToken() instanceof TokenInterface) {
+            $notifyToken = $this->tokenFactory->createNotifyToken(
+                $request->getToken()->getGatewayName(),
+                $request->getToken()->getDetails()
+            );
+
+            $details[RequestParam::VADS_URL_CHECK] = $notifyToken->getTargetUrl();
+        }
+
         $this->api->doPayment((array) $details);
     }
 

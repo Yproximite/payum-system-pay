@@ -16,4 +16,9 @@ class RequestParam
     public const VADS_PAGE_ACTION    = 'vads_page_action';
     public const VADS_PAYMENT_CONFIG = 'vads_payment_config';
     public const VADS_VERSION        = 'vads_version';
+    public const VADS_URL_CHECK      = 'vads_url_check';
+
+    private function __construct()
+    {
+    }
 }
