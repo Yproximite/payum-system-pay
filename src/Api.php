@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Yproximite\Payum\SystemPay;
 
 use Http\Message\MessageFactory;
-use Payum\Core\Exception\Http\HttpException;
 use Payum\Core\HttpClientInterface;
 use Payum\Core\Reply\HttpPostRedirect;
-use Psr\Http\Message\ResponseInterface;
 use Yproximite\Payum\SystemPay\Enum\ContextMode;
 use Yproximite\Payum\SystemPay\Enum\RequestParam;
 
@@ -54,21 +52,6 @@ class Api
         $details['signature'] = $this->signatureGenerator->generate($details, $this->getCertificate());
 
         throw new HttpPostRedirect($this->getApiEndpoint(), $details);
-    }
-
-    protected function doRequest(string $method, array $fields): ResponseInterface
-    {
-        $headers = [];
-
-        $request = $this->messageFactory->createRequest($method, $this->getApiEndpoint(), $headers, http_build_query($fields));
-
-        $response = $this->client->send($request);
-
-        if (false === ($response->getStatusCode() >= 200 && $response->getStatusCode() < 300)) {
-            throw HttpException::factory($request, $response);
-        }
-
-        return $response;
     }
 
     protected function getApiEndpoint(): string
