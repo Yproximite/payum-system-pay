@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Yproximite\Payum\SystemPay;
 
-use Yproximite\Payum\SystemPay\Action\AuthorizeAction;
-use Yproximite\Payum\SystemPay\Action\CancelAction;
 use Yproximite\Payum\SystemPay\Action\ConvertPaymentAction;
 use Yproximite\Payum\SystemPay\Action\CaptureAction;
 use Yproximite\Payum\SystemPay\Action\NotifyAction;
-use Yproximite\Payum\SystemPay\Action\RefundAction;
 use Yproximite\Payum\SystemPay\Action\StatusAction;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
@@ -31,14 +28,11 @@ class SystemPayGatewayFactory extends GatewayFactory
             'payum.factory_name'           => 'system_pay',
             'payum.factory_title'          => 'system_pay',
             'payum.action.capture'         => new CaptureAction(),
-            'payum.action.authorize'       => new AuthorizeAction(),
-            'payum.action.refund'          => new RefundAction(),
-            'payum.action.cancel'          => new CancelAction(),
+            'payum.action.convert_payment' => new ConvertPaymentAction(),
             'payum.action.notify'          => new NotifyAction(),
             'payum.action.status'          => function (ArrayObject $config) {
                 return new StatusAction($config['payum.request_status_applier']);
             },
-            'payum.action.convert_payment' => new ConvertPaymentAction(),
             'payum.request_status_applier' => new RequestStatusApplier(),
         ]);
 
