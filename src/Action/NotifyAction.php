@@ -29,8 +29,7 @@ class NotifyAction implements ActionInterface, GatewayAwareInterface
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
         $this->gateway->execute($httpRequest = new GetHttpRequest());
-
-        $model->replace($httpRequest->query);
+        $model->replace($httpRequest->request);
 
         throw new HttpResponse('OK', 200);
     }
