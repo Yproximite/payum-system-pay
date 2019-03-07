@@ -40,6 +40,10 @@ class CaptureAction implements ActionInterface, ApiAwareInterface, GatewayAwareI
 
         $details = ArrayObject::ensureArrayObject($request->getModel());
 
+        if (array_key_exists('vads_result', $details)) {
+            return;
+        }
+
         if (null === $details->get(RequestParam::VADS_URL_CHECK) && $request->getToken() instanceof TokenInterface) {
             $notifyToken = $this->tokenFactory->createNotifyToken(
                 $request->getToken()->getGatewayName(),
@@ -48,6 +52,8 @@ class CaptureAction implements ActionInterface, ApiAwareInterface, GatewayAwareI
 
             $details[RequestParam::VADS_URL_CHECK] = $notifyToken->getTargetUrl();
         }
+
+        $details['vads_url_return'] = $request->getToken()->getTargetUrl();
 
         $this->api->doPayment((array) $details);
     }
