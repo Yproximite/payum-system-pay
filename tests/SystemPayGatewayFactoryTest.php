@@ -58,8 +58,6 @@ class SystemPayGatewayFactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($config['payum.default_options']['sandbox']);
         $this->assertNull($config['payum.default_options']['certif_prod']);
         $this->assertNull($config['payum.default_options']['certif_test']);
-        $this->assertNull($config['payum.default_options']['url_notif_ok']);
-        $this->assertNull($config['payum.default_options']['url_notif_ko']);
         $this->assertEquals([
             'vads_site_id',
             'vads_action_mode',

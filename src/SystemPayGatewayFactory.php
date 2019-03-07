@@ -46,8 +46,6 @@ class SystemPayGatewayFactory extends GatewayFactory
                 'sandbox'                         => null,
                 'certif_prod'                     => null,
                 'certif_test'                     => null,
-                'url_notif_ok'                    => null,
-                'url_notif_ko'                    => null,
             ];
             $config->defaults($config['payum.default_options']);
             $config['payum.required_options'] = [
