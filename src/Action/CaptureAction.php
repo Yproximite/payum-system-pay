@@ -32,7 +32,7 @@ class CaptureAction extends BaseApiAwareAction implements ActionInterface, Gatew
 
         $details = ArrayObject::ensureArrayObject($request->getModel());
 
-        if (array_key_exists('vads_result', $details)) {
+        if (array_key_exists(Api::FIELD_VADS_RESULT, $details)) {
             return;
         }
 

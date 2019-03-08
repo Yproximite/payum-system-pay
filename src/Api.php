@@ -107,10 +107,21 @@ class Api
     public const FIELD_VADS_VERSION = 'vads_version';
 
     /**
-     * URL of the page to notify at the end of payment. Overrides the value entered in
-     * the notification rules settings. (input field, optional)
+     * URL of the page to notify at the end of payment. Overrides the value entered in the notification rules settings. (input field, optional)
      */
     public const FIELD_VADS_URL_CHECK = 'vads_url_check';
+
+    /**
+     * Return code of the requested action. (output field)
+     * Possible values:
+     *   - 00: Action successfully completed.
+     *   - 02: The merchant must contact the cardholder's bank Deprecated.
+     *   - 05: Action rejected.
+     *   - 17: Action canceled by the buyer.
+     *   - 30: Request format error. To match with the value of the `vads_extra_result` field.
+     *   - 96: Technical details.
+     */
+    public const FIELD_VADS_RESULT = 'vads_result';
 
     /**
      * Payment abandoned by the buyer.
