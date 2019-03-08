@@ -10,11 +10,6 @@ use Yproximite\Payum\SystemPay\Action\NotifyAction;
 use Yproximite\Payum\SystemPay\Action\StatusAction;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
-use Yproximite\Payum\SystemPay\Enum\ActionMode;
-use Yproximite\Payum\SystemPay\Enum\PageAction;
-use Yproximite\Payum\SystemPay\Enum\PaymentConfig;
-use Yproximite\Payum\SystemPay\Enum\RequestParam;
-use Yproximite\Payum\SystemPay\Enum\Version;
 use Yproximite\Payum\SystemPay\Request\RequestStatusApplier;
 
 class SystemPayGatewayFactory extends GatewayFactory
@@ -38,20 +33,20 @@ class SystemPayGatewayFactory extends GatewayFactory
 
         if (false === ($config['payum.api'] ?? false)) {
             $config['payum.default_options'] = [
-                RequestParam::VADS_SITE_ID        => null,
-                RequestParam::VADS_ACTION_MODE    => ActionMode::INTERACTIVE,
-                RequestParam::VADS_PAGE_ACTION    => PageAction::PAYMENT,
-                RequestParam::VADS_PAYMENT_CONFIG => PaymentConfig::SINGLE,
-                RequestParam::VADS_VERSION        => Version::V2,
+                Api::FIELD_VADS_SITE_ID           => null,
+                Api::FIELD_VADS_ACTION_MODE       => Api::ACTION_MODE_INTERACTIVE,
+                Api::FIELD_VADS_PAGE_ACTION       => Api::PAGE_ACTION_PAYMENT,
+                Api::FIELD_VADS_PAYMENT_CONFIG    => Api::PAYMENT_CONFIG_SINGLE,
+                Api::FIELD_VADS_VERSION           => Api::V2,
                 'sandbox'                         => null,
                 'certif_prod'                     => null,
                 'certif_test'                     => null,
             ];
             $config->defaults($config['payum.default_options']);
             $config['payum.required_options'] = [
-                RequestParam::VADS_SITE_ID,
-                RequestParam::VADS_ACTION_MODE,
-                RequestParam::VADS_PAGE_ACTION,
+                Api::FIELD_VADS_SITE_ID,
+                Api::FIELD_VADS_ACTION_MODE,
+                Api::FIELD_VADS_PAGE_ACTION,
                 'sandbox',
                 'certif_test',
                 'certif_prod',

@@ -14,7 +14,7 @@ use Payum\Core\Security\GenericTokenFactoryAwareInterface;
 use Payum\Core\Security\GenericTokenFactoryAwareTrait;
 use Payum\Core\Security\TokenInterface;
 use Yproximite\Payum\SystemPay\Action\Api\BaseApiAwareAction;
-use Yproximite\Payum\SystemPay\Enum\RequestParam;
+use Yproximite\Payum\SystemPay\Api;
 
 class CaptureAction extends BaseApiAwareAction implements ActionInterface, GatewayAwareInterface, GenericTokenFactoryAwareInterface
 {
@@ -36,13 +36,13 @@ class CaptureAction extends BaseApiAwareAction implements ActionInterface, Gatew
             return;
         }
 
-        if (null === $details->get(RequestParam::VADS_URL_CHECK) && $request->getToken() instanceof TokenInterface) {
+        if (null === $details->get(Api::FIELD_VADS_URL_CHECK) && $request->getToken() instanceof TokenInterface) {
             $notifyToken = $this->tokenFactory->createNotifyToken(
                 $request->getToken()->getGatewayName(),
                 $request->getToken()->getDetails()
             );
 
-            $details[RequestParam::VADS_URL_CHECK] = $notifyToken->getTargetUrl();
+            $details[Api::FIELD_VADS_URL_CHECK] = $notifyToken->getTargetUrl();
         }
 
         $details['vads_url_return'] = $request->getToken()->getTargetUrl();

@@ -8,7 +8,7 @@ use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\Request\GetStatusInterface;
-use Yproximite\Payum\SystemPay\Enum\ResponseParams;
+use Yproximite\Payum\SystemPay\Api;
 use Yproximite\Payum\SystemPay\Request\RequestStatusApplier;
 
 class StatusAction implements ActionInterface
@@ -32,7 +32,7 @@ class StatusAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        $this->requestStatusApplier->apply($model[ResponseParams::VADS_TRANS_STATUS] ?? null, $request);
+        $this->requestStatusApplier->apply($model[Api::FIELD_VADS_TRANS_STATUS] ?? null, $request);
     }
 
     /**
