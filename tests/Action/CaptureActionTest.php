@@ -4,84 +4,19 @@ declare(strict_types=1);
 
 namespace Yproximite\Payum\SystemPay\Tests\Action;
 
-use Payum\Core\GatewayInterface;
 use Payum\Core\Model\Token;
 use Payum\Core\Request\Capture;
 use Payum\Core\Security\GenericTokenFactoryInterface;
+use Payum\Core\Tests\GenericActionTest;
 use PHPUnit\Framework\MockObject\MockObject;
 use Yproximite\Payum\SystemPay\Action\CaptureAction;
-use PHPUnit\Framework\TestCase;
 use Yproximite\Payum\SystemPay\Api;
 
-class CaptureActionTest extends TestCase
+class CaptureActionTest extends GenericActionTest
 {
-    /**
-     * @test
-     */
-    public function shouldImplementActionInterface()
-    {
-        $rc = new \ReflectionClass('Yproximite\Payum\SystemPay\Action\CaptureAction');
+    protected $requestClass = Capture::class;
 
-        $this->assertTrue($rc->implementsInterface('Payum\Core\Action\ActionInterface'));
-    }
-
-    /**
-     * @test
-     */
-    public function couldBeConstructedWithoutAnyArguments()
-    {
-        new CaptureAction();
-
-        $this->assertTrue(true);
-    }
-
-    /**
-     * @test
-     */
-    public function shouldSupportCaptureWithArrayAccessAsModel()
-    {
-        $action = new CaptureAction();
-
-        $request = new Capture($this->createMock('ArrayAccess'));
-
-        $this->assertTrue($action->supports($request));
-    }
-
-    /**
-     * @test
-     */
-    public function shouldNotSupportNotCapture()
-    {
-        $action = new CaptureAction();
-
-        $request = new \stdClass();
-
-        $this->assertFalse($action->supports($request));
-    }
-
-    /**
-     * @test
-     */
-    public function shouldNotSupportCaptureAndNotArrayAccessAsModel()
-    {
-        $action = new CaptureAction();
-
-        $request = new Capture(new \stdClass());
-
-        $this->assertFalse($action->supports($request));
-    }
-
-    /**
-     * @test
-     *
-     * @expectedException \Payum\Core\Exception\RequestNotSupportedException
-     */
-    public function throwIfNotSupportedRequestGivenAsArgumentForExecute()
-    {
-        $action = new CaptureAction();
-
-        $action->execute(new \stdClass());
-    }
+    protected $actionClass = CaptureAction::class;
 
     /**
      * @test
@@ -148,14 +83,6 @@ class CaptureActionTest extends TestCase
 
         $this->assertArrayHasKey('vads_url_check', $model);
         $this->assertEquals('theNotifyUrl', $model['vads_url_check']);
-    }
-
-    /**
-     * @return MockObject|GatewayInterface
-     */
-    protected function createGatewayMock()
-    {
-        return $this->createMock(GatewayInterface::class);
     }
 
     /**
