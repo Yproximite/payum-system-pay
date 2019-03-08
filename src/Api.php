@@ -10,44 +10,190 @@ use Payum\Core\Reply\HttpPostRedirect;
 
 class Api
 {
+    /**
+     * Version #2 of the protocol exchange with the gateway, used in field `vads_version`
+     */
     public const V2 = 'V2';
 
+    /**
+     * The payment is interactive, used in field `vads_action_mode`
+     */
     public const ACTION_MODE_INTERACTIVE = 'INTERACTIVE';
 
-    public const FIELD_VADS_SITE_ID        = 'vads_site_id';
-    public const FIELD_VADS_CTX_MODE       = 'vads_ctx_mode';
-    public const FIELD_VADS_TRANS_ID       = 'vads_trans_id';
-    public const FIELD_VADS_TRANS_DATE     = 'vads_trans_date';
-    public const FIELD_VADS_AMOUNT         = 'vads_amount';
-    public const FIELD_VADS_CURRENCY       = 'vads_currency';
-    public const FIELD_VADS_ACTION_MODE    = 'vads_action_mode';
-    public const FIELD_VADS_PAGE_ACTION    = 'vads_page_action';
-    public const FIELD_VADS_PAYMENT_CONFIG = 'vads_payment_config';
-    public const FIELD_VADS_VERSION        = 'vads_version';
-    public const FIELD_VADS_URL_CHECK      = 'vads_url_check';
-    public const FIELD_VADS_TRANS_STATUS   = 'vads_trans_status';
+    /**
+     * Use the "test" mode of interaction with the payment gateway, used in field `vads_ctx_mode`
+     */
+    public const CONTEXT_MODE_TEST = 'TEST';
 
-    public const CONTEXT_MODE_TEST       = 'TEST';
+    /**
+     * Use the "production" mode of interaction with the payment gateway, used in field `vads_ctx_mode`
+     */
     public const CONTEXT_MODE_PRODUCTION = 'PRODUCTION';
 
+    /**
+     * Perform the "payment" action, used in field `vads_page_action`
+     */
     public const PAGE_ACTION_PAYMENT = 'PAYMENT';
 
+    /**
+     * Configure the payment in "SINGLE" mode, used in field `vads_payment_config`
+     */
     public const PAYMENT_CONFIG_SINGLE = 'SINGLE';
-    public const PAYMENT_CONFIG_MULTI  = 'MULTI';
 
-    public const STATUS_ABANDONED                         = 'ABANDONED';
-    public const STATUS_AUTHORISED                        = 'AUTHORISED';
-    public const STATUS_AUTHORISED_TO_VALIDATE            = 'AUTHORISED_TO_VALIDATE';
-    public const STATUS_CANCELLED                         = 'CANCELLED';
-    public const STATUS_CAPTURED                          = 'CAPTURED';
-    public const STATUS_CAPTURE_FAILED                    = 'CAPTURE_FAILED';
-    public const STATUS_EXPIRED                           = 'EXPIRED';
-    public const STATUS_INITIAL                           = 'INITIAL';
-    public const STATUS_NOT_CREATED                       = 'NOT_CREATED';
-    public const STATUS_REFUSED                           = 'REFUSED';
-    public const STATUS_SUSPENDED                         = 'SUSPENDED';
-    public const STATUS_UNDER_VERIFICATION                = 'UNDER_VERIFICATION';
-    public const STATUS_WAITING_AUTHORISATION             = 'WAITING_AUTHORISATION';
+    /**
+     * Generated while subscribing to the payment gateway. (input field, mandatory)
+     * Its value can be seen in the interface of the Back Office in Settings > Shop > Certificates tab by all authorized persons.
+     */
+    public const FIELD_VADS_SITE_ID = 'vads_site_id';
+
+    /**
+     * Defines the mode of interaction with the payment gateway. (input field, mandatory)
+     */
+    public const FIELD_VADS_CTX_MODE = 'vads_ctx_mode';
+
+    /**
+     * 6 numeric characters and that should be unique for every transaction within a given shop over one day. (input field, mandatory)
+     */
+    public const FIELD_VADS_TRANS_ID = 'vads_trans_id';
+
+    /**
+     * Corresponds to the timestamp in the YYYYMMDDHHMMSS format. (input field, mandatory)
+     */
+    public const FIELD_VADS_TRANS_DATE = 'vads_trans_date';
+
+    /**
+     * Allows to define the transaction status. (output field)
+     */
+    public const FIELD_VADS_TRANS_STATUS = 'vads_trans_status';
+
+    /**
+     * The amount of the transaction presented in the smallest unit of the currency. (input field, mandatory)
+     * For a transaction of 10 euros and 28 cents, the value is "1028".
+     */
+    public const FIELD_VADS_AMOUNT = 'vads_amount';
+
+    /**
+     * Numeric currency code to be used for the payment, in compliance with the ISO 4217 standard. (input field, mandatory)
+     */
+    public const FIELD_VADS_CURRENCY = 'vads_currency';
+
+    /**
+     * Data acquisition mode of the credit card details. (input field, mandatory)
+     */
+    public const FIELD_VADS_ACTION_MODE = 'vads_action_mode';
+
+    /**
+     * Defines the action to be performed. (input field, mandatory)
+     */
+    public const FIELD_VADS_PAGE_ACTION = 'vads_page_action';
+
+    /**
+     * Defines the type of payment: immediate or installment. (input field, mandatory)
+     *
+     *  - For a single payment, the value must be set to "SINGLE"
+     *  - For an installment payment with fixed amounts and dates,
+     *    the value must be set to "MULTI": followed by "key=value" pairs separated by the ";" character.
+     *    The parameters are:
+     *      - "first": indicates the amount of the first installment (populated in the smallest unit of the currency).
+     *      - "count": indicates the total number of installments.
+     *      - "period": indicates the number of days between 2 installments.
+     *    The field order associated with MULTI must be respected.
+     */
+    public const FIELD_VADS_PAYMENT_CONFIG = 'vads_payment_config';
+
+    /**
+     * Version of the exchange protocol with the payment gateway. (input field, mandatory)
+     */
+    public const FIELD_VADS_VERSION = 'vads_version';
+
+    /**
+     * URL of the page to notify at the end of payment. Overrides the value entered in
+     * the notification rules settings. (input field, optional)
+     */
+    public const FIELD_VADS_URL_CHECK = 'vads_url_check';
+
+    /**
+     * Payment abandoned by the buyer.
+     * The transaction has not been created, and therefore cannot be viewed in the Back Office.
+     */
+    public const STATUS_ABANDONED = 'ABANDONED';
+
+    /**
+     * The transaction has been accepted and will be automatically captured at the bank on the expected date.
+     */
+    public const STATUS_AUTHORISED = 'AUTHORISED';
+
+    /**
+     * The transaction, created with manual validation, is authorized. The merchant must manually validate the transaction in order for it to be captured.
+     *
+     * The transaction can be validated as long as the expiration date of the authorization request has not passed. If the authorization validity period has passed, the payment status changes to EXPIRED. The Expired status is final.
+     */
+    public const STATUS_AUTHORISED_TO_VALIDATE = 'AUTHORISED_TO_VALIDATE';
+
+    /**
+     * The transaction has been canceled by the merchant.
+     */
+    public const STATUS_CANCELLED = 'CANCELLED';
+
+    /**
+     * The transaction has been captured by the bank
+     */
+    public const STATUS_CAPTURED = 'CAPTURED';
+
+    /**
+     * The transaction capture has failed.
+     * Contact the technical support.
+     */
+    public const STATUS_CAPTURE_FAILED = 'CAPTURE_FAILED';
+
+    /**
+     * The expiry date of the authorization request has passed and the merchant has not validated the transaction.
+     * The account of the cardholder will therefore, not be debited.
+     */
+    public const STATUS_EXPIRED = 'EXPIRED';
+
+    /**
+     * This status concerns all the payment methods that require integration via a payment form with redirection.
+     * This status is returned when:
+     *   - no response has been returned by the acquirer
+     *   - or when the delay of the response from the acquirer has exceeded the payment session on the payment gateway.
+     *
+     * This status is temporary.
+     * The final status will be displayed in the Back Office immediately after the synchronization has been completed.
+     */
+    public const STATUS_INITIAL = 'INITIAL';
+
+    /**
+     * The transaction has not been created and cannot be viewed in the Back Office.
+     */
+    public const STATUS_NOT_CREATED = 'NOT_CREATED';
+
+    /**
+     * The transaction has been rejected.
+     */
+    public const STATUS_REFUSED = 'REFUSED';
+
+    /**
+     * The capture of the transaction is temporarily blocked by the acquirer (AMEX GLOBAL or SECURE TRADING).
+     * Once the transaction has been correctly captured, its status changes to CAPTURED.
+     */
+    public const STATUS_SUSPENDED = 'SUSPENDED';
+
+    /**
+     * Under verification (Specific to PayPal).
+     */
+    public const STATUS_UNDER_VERIFICATION = 'UNDER_VERIFICATION';
+
+    /**
+     * The capture delay exceeds the authorization validity period.
+     */
+    public const STATUS_WAITING_AUTHORISATION = 'WAITING_AUTHORISATION';
+
+    /**
+     * The capture delay exceeds the authorization validity period.
+     * An authorization of 1 euro (or request for information on the CB network if the buyer supports it) has been accepted.
+     * The merchant must manually validate the transaction for the authorization request and the capture to occur.
+     */
     public const STATUS_WAITING_AUTHORISATION_TO_VALIDATE = 'WAITING_AUTHORISATION_TO_VALIDATE';
 
     /**
