@@ -45,7 +45,7 @@ class CaptureAction extends BaseApiAwareAction implements ActionInterface, Gatew
             $details[Api::FIELD_VADS_URL_CHECK] = $notifyToken->getTargetUrl();
         }
 
-        $details['vads_url_return'] = $request->getToken()->getTargetUrl();
+        $details[Api::FIELD_VADS_URL_RETURN] = $request->getToken()->getTargetUrl();
 
         $this->api->doPayment((array) $details);
     }

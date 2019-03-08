@@ -36,6 +36,7 @@ class ApiTest extends TestCase
         yield [Api::FIELD_VADS_PAGE_ACTION, 'vads_page_action'];
         yield [Api::FIELD_VADS_PAYMENT_CONFIG, 'vads_payment_config'];
         yield [Api::FIELD_VADS_VERSION, 'vads_version'];
+        yield [Api::FIELD_VADS_URL_RETURN, 'vads_url_return'];
         yield [Api::FIELD_VADS_URL_CHECK, 'vads_url_check'];
         yield [Api::FIELD_VADS_RESULT, 'vads_result'];
         yield [Api::STATUS_ABANDONED, 'ABANDONED'];

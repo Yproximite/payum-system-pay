@@ -107,6 +107,12 @@ class Api
     public const FIELD_VADS_VERSION = 'vads_version';
 
     /**
+     * Default URL to where the buyer will be redirected after having clicked on Return to shop,
+     * if `vads_url_error`, `vads_url_refused`, `vads_url_success` or `vads_url_cancel` is not set. (input field, optional)
+     */
+    public const FIELD_VADS_URL_RETURN = 'vads_url_return';
+
+    /**
      * URL of the page to notify at the end of payment. Overrides the value entered in the notification rules settings. (input field, optional)
      */
     public const FIELD_VADS_URL_CHECK = 'vads_url_check';
