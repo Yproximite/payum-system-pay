@@ -31,9 +31,11 @@ class ConvertPaymentAction implements ActionInterface, GatewayAwareInterface
         $payment = $request->getSource();
         $details = ArrayObject::ensureArrayObject($payment->getDetails());
 
-        $details[Api::FIELD_VADS_TRANS_ID]   = sprintf('%06d', $payment->getNumber());
-        $details[Api::FIELD_VADS_TRANS_DATE] = gmdate('YmdHis');
-        $details[Api::FIELD_VADS_AMOUNT]     = $payment->getTotalAmount();
+        $details[Api::FIELD_VADS_TRANS_ID]       = sprintf('%06d', $payment->getNumber());
+        $details[Api::FIELD_VADS_TRANS_DATE]     = gmdate('YmdHis');
+        $details[Api::FIELD_VADS_AMOUNT]         = $payment->getTotalAmount();
+        $details[Api::FIELD_VADS_CUSTOMER_ID]    = $payment->getClientId();
+        $details[Api::FIELD_VADS_CUSTOMER_EMAIL] = $payment->getClientEmail();
 
         $this->gateway->execute($currency = new GetCurrency($payment->getCurrencyCode()));
         $details[Api::FIELD_VADS_CURRENCY] = $currency->numeric;
