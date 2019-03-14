@@ -32,11 +32,11 @@ class CaptureAction extends BaseApiAwareAction implements ActionInterface, Gatew
 
         $details = ArrayObject::ensureArrayObject($request->getModel());
 
-        if (array_key_exists(Api::FIELD_VADS_RESULT, $details)) {
+        if (null !== $details[Api::FIELD_VADS_RESULT]) {
             return;
         }
 
-        if (null === $details->get(Api::FIELD_VADS_URL_CHECK) && $request->getToken() instanceof TokenInterface) {
+        if (null === $details[Api::FIELD_VADS_URL_CHECK] && $request->getToken() instanceof TokenInterface) {
             $notifyToken = $this->tokenFactory->createNotifyToken(
                 $request->getToken()->getGatewayName(),
                 $request->getToken()->getDetails()
