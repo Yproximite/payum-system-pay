@@ -39,6 +39,8 @@ class ApiTest extends TestCase
         yield [Api::FIELD_VADS_URL_RETURN, 'vads_url_return'];
         yield [Api::FIELD_VADS_URL_CHECK, 'vads_url_check'];
         yield [Api::FIELD_VADS_RESULT, 'vads_result'];
+        yield [Api::FIELD_VADS_CUSTOMER_ID, 'vads_cust_id'];
+        yield [Api::FIELD_VADS_CUSTOMER_EMAIL, 'vads_cust_email'];
         yield [Api::STATUS_ABANDONED, 'ABANDONED'];
         yield [Api::STATUS_AUTHORISED, 'AUTHORISED'];
         yield [Api::STATUS_AUTHORISED_TO_VALIDATE, 'AUTHORISED_TO_VALIDATE'];

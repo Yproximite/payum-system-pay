@@ -130,6 +130,17 @@ class Api
     public const FIELD_VADS_RESULT = 'vads_result';
 
     /**
+     * Buyer ID (identification by the merchant). (input field, optional)
+     */
+    public const FIELD_VADS_CUSTOMER_ID = 'vads_cust_id';
+
+    /**
+     * Buyer's e-mail address, required if you want the payment gateway to send an e-mail to the buyer. (input field, optional)
+     * In order to make sure the buyer receives an e-mail, make sure to post this parameter in the form when you generate a payment request.
+     */
+    public const FIELD_VADS_CUSTOMER_EMAIL = 'vads_cust_email';
+
+    /**
      * Payment abandoned by the buyer.
      * The transaction has not been created, and therefore cannot be viewed in the Back Office.
      */
