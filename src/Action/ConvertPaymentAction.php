@@ -12,7 +12,7 @@ use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Model\PaymentInterface;
 use Payum\Core\Request\Convert;
 use Payum\Core\Request\GetCurrency;
-use Yproximite\Payum\SystemPay\Enum\RequestParam;
+use Yproximite\Payum\SystemPay\Api;
 
 class ConvertPaymentAction implements ActionInterface, GatewayAwareInterface
 {
@@ -31,12 +31,14 @@ class ConvertPaymentAction implements ActionInterface, GatewayAwareInterface
         $payment = $request->getSource();
         $details = ArrayObject::ensureArrayObject($payment->getDetails());
 
-        $details[RequestParam::VADS_TRANS_ID]   = $payment->getNumber();
-        $details[RequestParam::VADS_TRANS_DATE] = gmdate('YmdHis');
-        $details[RequestParam::VADS_AMOUNT]     = $payment->getTotalAmount();
+        $details[Api::FIELD_VADS_TRANS_ID]       = sprintf('%06d', $payment->getNumber());
+        $details[Api::FIELD_VADS_TRANS_DATE]     = gmdate('YmdHis');
+        $details[Api::FIELD_VADS_AMOUNT]         = $payment->getTotalAmount();
+        $details[Api::FIELD_VADS_CUSTOMER_ID]    = $payment->getClientId();
+        $details[Api::FIELD_VADS_CUSTOMER_EMAIL] = $payment->getClientEmail();
 
         $this->gateway->execute($currency = new GetCurrency($payment->getCurrencyCode()));
-        $details[RequestParam::VADS_CURRENCY] = $currency->numeric;
+        $details[Api::FIELD_VADS_CURRENCY] = $currency->numeric;
 
         $request->setResult((array) $details);
     }

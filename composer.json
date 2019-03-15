@@ -27,7 +27,13 @@
     },
     "archive": {
         "exclude": [
-            "ansible"
+            "ansible",
+            ".php_cs",
+            ".travis.yml",
+            "Makefile",
+            "phpstan.neon",
+            "phpunit.xml",
+            "Vagrantfile"
         ]
     }
 }

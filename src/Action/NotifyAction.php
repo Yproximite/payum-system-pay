@@ -7,10 +7,13 @@ namespace Yproximite\Payum\SystemPay\Action;
 use Payum\Core\Action\ActionInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
+use Payum\Core\GatewayAwareInterface;
 use Payum\Core\GatewayAwareTrait;
+use Payum\Core\Reply\HttpResponse;
+use Payum\Core\Request\GetHttpRequest;
 use Payum\Core\Request\Notify;
 
-class NotifyAction implements ActionInterface
+class NotifyAction implements ActionInterface, GatewayAwareInterface
 {
     use GatewayAwareTrait;
 
@@ -25,7 +28,10 @@ class NotifyAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        throw new \LogicException('Not implemented');
+        $this->gateway->execute($httpRequest = new GetHttpRequest());
+        $model->replace($httpRequest->request);
+
+        throw new HttpResponse('OK', 200);
     }
 
     /**
@@ -35,7 +41,6 @@ class NotifyAction implements ActionInterface
     {
         return
             $request instanceof Notify &&
-            $request->getModel() instanceof \ArrayAccess
-        ;
+            $request->getModel() instanceof \ArrayAccess;
     }
 }
