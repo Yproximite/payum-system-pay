@@ -10,33 +10,19 @@ use Yproximite\Payum\SystemPay\Request\RequestStatusApplier;
 
 class RequestStatusApplierTest extends TestCase
 {
-    public function testApplyNullStatus()
-    {
-        $requestStatusApplier = new RequestStatusApplier();
-        $requestStatusApplier->apply(null, $this->createRequestMock('markNew'));
-    }
-
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Unknown status "qsd", valid status are: "ABANDONED", "AUTHORISED", "AUTHORISED_TO_VALIDATE", "CANCELLED", "CAPTURED", "CAPTURE_FAILED", "EXPIRED", "INITIAL", "NOT_CREATED", "REFUSED", "SUSPENDED", "UNDER_VERIFICATION", "WAITING_AUTHORISATION", "WAITING_AUTHORISATION_TO_VALIDATE".
+     * @dataProvider provideApplyStatus
      */
-    public function testApplyUnknownStatus()
-    {
-        $requestStatusApplier = new RequestStatusApplier();
-        $requestStatusApplier->apply('qsd', $this->createRequestMock());
-    }
-
-    /**
-     * @dataProvider provideApplyValidStatus
-     */
-    public function testApplyValidStatus(string $status, string $expectedMethodName)
+    public function testApplyStatus(?string $status, string $expectedMethodName)
     {
         $requestStatusApplier = new RequestStatusApplier();
         $requestStatusApplier->apply($status, $this->createRequestMock($expectedMethodName));
     }
 
-    public function provideApplyValidStatus()
+    public function provideApplyStatus()
     {
+        yield [null, 'markNew'];
+        yield ['qsdqsd', 'markUnknown'];
         yield ['ABANDONED', 'markCanceled'];
         yield ['AUTHORISED', 'markAuthorized'];
         yield ['AUTHORISED_TO_VALIDATE', 'markPending'];

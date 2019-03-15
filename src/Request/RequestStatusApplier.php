@@ -39,11 +39,9 @@ class RequestStatusApplier
         }
 
         if (!array_key_exists($status, $this->appliers)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Unknown status "%s", valid status are: "%s".',
-                $status,
-                implode('", "', array_keys($this->appliers))
-            ));
+            $request->markUnknown();
+
+            return;
         }
 
         $this->appliers[$status]($request);
