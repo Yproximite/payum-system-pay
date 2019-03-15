@@ -62,7 +62,7 @@ $payum = (new PayumBuilder())
     ->addDefaultStorages()
 
     ->addGateway('gatewayName', [
-        'factory' => 'system_may',
+        'factory'      => 'system_pay',
         'vads_site_id' => 'change it',
         'certif_prod'  => 'change it',
         'certif_test'  => 'change it',
