@@ -32,7 +32,7 @@ class StatusAction implements ActionInterface
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
-        $this->requestStatusApplier->apply($model[Api::FIELD_VADS_TRANS_STATUS] ?? null, $request);
+        $this->requestStatusApplier->apply($model[Api::FIELD_VADS_TRANS_STATUS], $request);
     }
 
     /**
