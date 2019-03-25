@@ -110,3 +110,71 @@ class Payment extends BasePayment
 ```
 
 By doing this, the library will be able to pick the payment's id and use it for the payment with System Pay (we should send a transaction id between `000000` and `999999`). 
+
+### Payment in several instalments
+
+If you planned to support payments in several instalments, somewhere in your code you will need to call `Payment#setPartialAmount` to keep a trace of the amount per payment:
+
+```php
+<?php
+class Payment extends BasePayment
+{
+    // ...
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $partialAmount;
+
+    public function getPartialAmount(): ?int
+    {
+        return $this->partialAmount;
+    }
+
+    public function setPartialAmount(?int $partialAmount): void
+    {
+        $this->partialAmount = $partialAmount;
+    }
+}
+```
+
+#### Usage
+
+```php
+<?php
+
+use App\Entity\Payment;
+use Yproximite\Payum\SystemPay\Api;
+use Yproximite\Payum\SystemPay\PaymentConfigGenerator;
+
+// Define the periods
+$periods = [
+    ['amount' => 1000, 'date' => new \DateTime()],
+    ['amount' => 2000, 'date' => new (\DateTime())->add(new \DateInterval('P1M'))],
+    ['amount' => 3000, 'date' => new (\DateTime())->add(new \DateInterval('P2M'))],
+];
+
+// Compute total amount
+$totalAmount = array_sum(array_column($periods, 'amount'));
+
+// Compute `paymentConfig` fields that will be sent to the API
+// It will generates something like this: MULTI_EXT:20190102=1000;20190202=2000;20190302=3000
+$paymentConfig = (new PaymentConfigGenerator())->generate($periods);
+
+// Then create payments
+$storage = $payum->getStorage(Payment::class);
+$payments = [];
+
+foreach ($periods as $period) {
+    $payment = $storage->create();
+    $payment->setTotalAmount($totalAmount);
+    $payment->setPartialAmount($period['amount']);
+
+    $details = $payment->getDetails();
+    $details[Api::FIELD_VADS_PAYMENT_CONFIG] = $generatedPaymentConfig;
+    $payment->setDetails($details);
+
+    $storage->update($payment);
+    $payments[] = $payment;
+}
+```
