@@ -58,7 +58,7 @@ class PaymentConfigGenerator
         ));
     }
 
-    protected function isMultiByDateIsValid(array $input)
+    protected function isMultiByDateIsValid(array $input): bool
     {
         $isValid = true;
 
