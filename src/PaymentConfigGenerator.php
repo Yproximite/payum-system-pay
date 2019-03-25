@@ -7,7 +7,7 @@ namespace Yproximite\Payum\SystemPay;
 class PaymentConfigGenerator
 {
     /**
-     * @param string|array $input
+     * @param string|array|mixed $input
      */
     public function generate($input): string
     {
