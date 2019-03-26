@@ -112,6 +112,8 @@ class Api
      */
     public const FIELD_VADS_URL_RETURN = 'vads_url_return';
 
+    public const FIELD_VADS_URL_CANCEL = 'vads_url_cancel';
+
     /**
      * URL of the page to notify at the end of payment. Overrides the value entered in the notification rules settings. (input field, optional)
      */
