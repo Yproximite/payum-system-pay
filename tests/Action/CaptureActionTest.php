@@ -30,7 +30,8 @@ class CaptureActionTest extends GenericActionTest
         $apiMock = $this->createApiMock();
         $apiMock
             ->expects($this->never())
-            ->method('doPayment');
+            ->method('doPayment')
+        ;
 
         $action = new CaptureAction();
         $action->setApi($apiMock);
@@ -48,6 +49,7 @@ class CaptureActionTest extends GenericActionTest
         $captureToken = new Token();
         $captureToken->setGatewayName('theGatewayName');
         $captureToken->setTargetUrl('theReturnUrl');
+        $captureToken->setAfterUrl('theAfterUrl');
         $captureToken->setDetails($model);
 
         $notifyToken = new Token();
@@ -67,7 +69,9 @@ class CaptureActionTest extends GenericActionTest
             ->with([
                 'vads_url_return' => 'theReturnUrl',
                 'vads_url_check'  => 'theNotifyUrl',
-            ]);
+                'vads_url_cancel' => 'theAfterUrl',
+            ])
+        ;
 
         $action = new CaptureAction();
         $action->setApi($apiMock);
