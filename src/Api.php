@@ -113,6 +113,11 @@ class Api
     public const FIELD_VADS_URL_RETURN = 'vads_url_return';
 
     /**
+     * URL to which the buyer will be redirected upon clicking on "Cancel and return to shop" before proceeding to payment. (input field, optional)
+     */
+    public const FIELD_VADS_URL_CANCEL = 'vads_url_cancel';
+
+    /**
      * URL of the page to notify at the end of payment. Overrides the value entered in the notification rules settings. (input field, optional)
      */
     public const FIELD_VADS_URL_CHECK = 'vads_url_check';

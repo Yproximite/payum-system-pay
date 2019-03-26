@@ -45,6 +45,19 @@ class CaptureAction extends BaseApiAwareAction implements ActionInterface, Gatew
             $details[Api::FIELD_VADS_URL_CHECK] = $notifyToken->getTargetUrl();
         }
 
+        if (null === $details[Api::FIELD_VADS_URL_CANCEL] && $request->getToken() instanceof TokenInterface) {
+            // We are directly redirecting the user to the "done" page if he cancels payment.
+            // Because when he clicks on the button "Retourner à la boutique", SystemPay does not send us back
+            // data (POST or GET) to tell us the user canceled his payment.
+            //
+            // That means the user was redirected to the "capture" page:
+            //  - which calls `ConvertPaymentAction`, but there is no data to use (like a field `vads_cancelled`), so the payment is like a NEW payment
+            //  - which calls this `CaptureAction`, and since there is no `Api::FIELD_VADS_RESULT` field defined, it executes `$this->api->doPayment()` again
+            //
+            // So it's bad, and we should trick the "done" page to display an error if the payment is new.
+            $details[Api::FIELD_VADS_URL_CANCEL] = $request->getToken()->getAfterUrl();
+        }
+
         $details[Api::FIELD_VADS_URL_RETURN] = $request->getToken()->getTargetUrl();
 
         $this->api->doPayment((array) $details);
