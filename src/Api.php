@@ -112,6 +112,9 @@ class Api
      */
     public const FIELD_VADS_URL_RETURN = 'vads_url_return';
 
+    /**
+     * URL to which the buyer will be redirected upon clicking on "Cancel and return to shop" before proceeding to payment
+     */
     public const FIELD_VADS_URL_CANCEL = 'vads_url_cancel';
 
     /**
