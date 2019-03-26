@@ -150,8 +150,8 @@ use Yproximite\Payum\SystemPay\PaymentConfigGenerator;
 // Define the periods
 $periods = [
     ['amount' => 1000, 'date' => new \DateTime()],
-    ['amount' => 2000, 'date' => new (\DateTime())->add(new \DateInterval('P1M'))],
-    ['amount' => 3000, 'date' => new (\DateTime())->add(new \DateInterval('P2M'))],
+    ['amount' => 2000, 'date' => (new \DateTime())->add(new \DateInterval('P1M'))],
+    ['amount' => 3000, 'date' => (new \DateTime())->add(new \DateInterval('P2M'))],
 ];
 
 // Compute total amount
