@@ -22,7 +22,7 @@ class SystemPayGatewayFactoryTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      * @expectedException \Payum\Core\Exception\LogicException
-     * @expectedExceptionMessage The vads_site_id, sandbox, certif_test, certif_prod fields are required.
+     * @expectedExceptionMessage The vads_site_id, certif_test, certif_prod fields are required.
      */
     public function shouldThrowIfRequiredOptionsAreNotPassed()
     {
@@ -55,14 +55,13 @@ class SystemPayGatewayFactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('PAYMENT', $config['payum.default_options']['vads_page_action']);
         $this->assertSame('SINGLE', $config['payum.default_options']['vads_payment_config']);
         $this->assertSame('V2', $config['payum.default_options']['vads_version']);
-        $this->assertNull($config['payum.default_options']['sandbox']);
+        $this->assertTrue($config['payum.default_options']['sandbox']);
         $this->assertNull($config['payum.default_options']['certif_prod']);
         $this->assertNull($config['payum.default_options']['certif_test']);
         $this->assertEquals([
             'vads_site_id',
             'vads_action_mode',
             'vads_page_action',
-            'sandbox',
             'certif_test',
             'certif_prod',
         ], $config['payum.required_options']);
