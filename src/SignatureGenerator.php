@@ -24,9 +24,9 @@ class SignatureGenerator
         // Join fields values
         $str = implode('+', array_values($fields));
 
-        if ($hashAlgorithm === 'sha1') {
+        if ('sha1' === $hashAlgorithm) {
             return sha1($str);
-        } else if ($hashAlgorithm === 'hmac-sha256') {
+        } elseif ('hmac-sha256' === $hashAlgorithm) {
             return base64_encode(hash_hmac('sha256', $str, $certificate, true));
         }
 

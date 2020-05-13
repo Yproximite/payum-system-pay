@@ -299,7 +299,7 @@ class Api
         $hash = $this->options['hash_algorithm'];
 
         // workaround for https://github.com/Payum/Payum/issues/692
-        if (substr($hash, 0, $length = strlen(SignatureGenerator::HASH_ALGORITHM_PREFIX)) === SignatureGenerator::HASH_ALGORITHM_PREFIX) {
+        if (SignatureGenerator::HASH_ALGORITHM_PREFIX === substr($hash, 0, $length = strlen(SignatureGenerator::HASH_ALGORITHM_PREFIX))) {
             $hash = substr($hash, $length);
         }
 
