@@ -6,6 +6,8 @@ namespace Yproximite\Payum\SystemPay;
 
 class SignatureGenerator
 {
+    public const HASH_ALGORITHM_PREFIX = 'algo-';
+
     public function generate(array $fields, string $certificate, $hashAlgorithm = 'sha1'): string
     {
         // Filter keys

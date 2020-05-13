@@ -159,7 +159,8 @@ class Api
     /**
      * The transaction, created with manual validation, is authorized. The merchant must manually validate the transaction in order for it to be captured.
      *
-     * The transaction can be validated as long as the expiration date of the authorization request has not passed. If the authorization validity period has passed, the payment status changes to EXPIRED. The Expired status is final.
+     * The transaction can be validated as long as the expiration date of the authorization request has not passed. If the authorization validity period has passed, the payment status changes to EXPIRED. The Expired
+     * status is final.
      */
     public const STATUS_AUTHORISED_TO_VALIDATE = 'AUTHORISED_TO_VALIDATE';
 
@@ -269,7 +270,7 @@ class Api
         $details[self::FIELD_VADS_PAYMENT_CONFIG] = $this->getOption($details, self::FIELD_VADS_PAYMENT_CONFIG);
         $details[self::FIELD_VADS_VERSION]        = $this->getOption($details, self::FIELD_VADS_VERSION);
 
-        $details['signature'] = $this->signatureGenerator->generate($details, $this->getCertificate());
+        $details['signature'] = $this->signatureGenerator->generate($details, $this->getCertificate(), $this->getHashAlgorithm());
 
         throw new HttpPostRedirect($this->getApiEndpoint(), $details);
     }
@@ -291,6 +292,18 @@ class Api
         return self::CONTEXT_MODE_PRODUCTION === $this->getContextMode()
             ? $this->options['certif_prod']
             : $this->options['certif_test'];
+    }
+
+    protected function getHashAlgorithm(): string
+    {
+        $hash = $this->options['hash_algorithm'];
+
+        // workaround for https://github.com/Payum/Payum/issues/692
+        if (substr($hash, 0, $length = strlen(SignatureGenerator::HASH_ALGORITHM_PREFIX)) === SignatureGenerator::HASH_ALGORITHM_PREFIX) {
+            $hash = substr($hash, $length);
+        }
+
+        return $hash;
     }
 
     /**
