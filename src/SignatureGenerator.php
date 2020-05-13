@@ -8,7 +8,7 @@ class SignatureGenerator
 {
     public const HASH_ALGORITHM_PREFIX = 'algo-';
 
-    public function generate(array $fields, string $certificate, $hashAlgorithm = 'sha1'): string
+    public function generate(array $fields, string $certificate, string $hashAlgorithm = 'sha1'): string
     {
         // Filter keys
         $fields = array_filter($fields, function ($key) {
