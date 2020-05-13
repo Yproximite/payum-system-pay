@@ -30,9 +30,6 @@ class SignatureGenerator
             return base64_encode(hash_hmac('sha256', $str, $certificate, true));
         }
 
-        throw new \InvalidArgumentException(sprintf(
-            'Unknown algorithm hash "%s" used.',
-            $hashAlgorithm
-        ));
+        throw new \InvalidArgumentException(sprintf('Unknown algorithm hash "%s" used.', $hashAlgorithm));
     }
 }

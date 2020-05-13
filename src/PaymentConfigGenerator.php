@@ -16,11 +16,7 @@ class PaymentConfigGenerator
             $input                      = mb_strtoupper($input);
 
             if (!in_array($input, $validPaymentConfigs, true)) {
-                throw new \InvalidArgumentException(sprintf(
-                    'The given input "%s" is not a valid payment configuration, valid values are "%s".',
-                    $input,
-                    implode('", "', $validPaymentConfigs)
-                ));
+                throw new \InvalidArgumentException(sprintf('The given input "%s" is not a valid payment configuration, valid values are "%s".', $input, implode('", "', $validPaymentConfigs)));
             }
 
             return $input;
@@ -47,15 +43,10 @@ class PaymentConfigGenerator
                 );
             }
 
-            throw new \InvalidArgumentException(
-                'The given input array is not valid. It should be either an array with keys "amount", "count", and "period", or an array of arrays with keys "date" and "amount".'
-            );
+            throw new \InvalidArgumentException('The given input array is not valid. It should be either an array with keys "amount", "count", and "period", or an array of arrays with keys "date" and "amount".');
         }
 
-        throw new \InvalidArgumentException(sprintf(
-            'The given input "%s" should be a string or an array.',
-            $input
-        ));
+        throw new \InvalidArgumentException(sprintf('The given input "%s" should be a string or an array.', $input));
     }
 
     protected function isMultiByDateIsValid(array $input): bool
