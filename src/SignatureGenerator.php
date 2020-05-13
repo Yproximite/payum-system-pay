@@ -6,7 +6,9 @@ namespace Yproximite\Payum\SystemPay;
 
 class SignatureGenerator
 {
-    public function generate(array $fields, string $certificate): string
+    public const HASH_ALGORITHM_PREFIX = 'algo-';
+
+    public function generate(array $fields, string $certificate, string $hashAlgorithm = 'sha1'): string
     {
         // Filter keys
         $fields = array_filter($fields, function ($key) {
@@ -22,6 +24,12 @@ class SignatureGenerator
         // Join fields values
         $str = implode('+', array_values($fields));
 
-        return sha1($str);
+        if ('sha1' === $hashAlgorithm) {
+            return sha1($str);
+        } elseif ('hmac-sha256' === $hashAlgorithm) {
+            return base64_encode(hash_hmac('sha256', $str, $certificate, true));
+        }
+
+        throw new \InvalidArgumentException(sprintf('Unknown algorithm hash "%s" used.', $hashAlgorithm));
     }
 }

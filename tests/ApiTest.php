@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Yproximite\Payum\SystemPay\Tests;
 
-use Yproximite\Payum\SystemPay\Api;
+use Http\Message\MessageFactory;
+use Payum\Core\HttpClientInterface;
+use Payum\Core\Reply\HttpPostRedirect;
 use PHPUnit\Framework\TestCase;
+use Yproximite\Payum\SystemPay\Api;
+use Yproximite\Payum\SystemPay\SignatureGenerator;
 
 class ApiTest extends TestCase
 {
@@ -55,5 +59,29 @@ class ApiTest extends TestCase
         yield [Api::STATUS_UNDER_VERIFICATION, 'UNDER_VERIFICATION'];
         yield [Api::STATUS_WAITING_AUTHORISATION, 'WAITING_AUTHORISATION'];
         yield [Api::STATUS_WAITING_AUTHORISATION_TO_VALIDATE, 'WAITING_AUTHORISATION_TO_VALIDATE'];
+    }
+
+    public function testGetAlgorithmHash(): void
+    {
+        $this->expectException(HttpPostRedirect::class);
+
+        $signatureGenerator = $this->createMock(SignatureGenerator::class);
+        $signatureGenerator->method('generate')
+            ->with($this->isType('array'), $this->equalTo('the test certificate'), $this->equalTo('sha1'))
+            ->willReturn('<signature>');
+
+        $httpClient     = $this->createMock(HttpClientInterface::class);
+        $messageFactory = $this->createMock(MessageFactory::class);
+
+        $options = [
+            'sandbox'        => true,
+            'certif_test'    => 'the test certificate',
+            'certif_prod'    => 'the prod certificate',
+            'hash_algorithm' => 'algo-sha1',
+        ];
+
+        $api = new Api($options, $signatureGenerator, $httpClient, $messageFactory);
+
+        $api->doPayment([]);
     }
 }

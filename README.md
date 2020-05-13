@@ -35,7 +35,7 @@ services:
 Then configure the gateway:
 
 ```yaml
-# config/packages/payum.yaml or app/config/config.yml
+# config/packages/payum.yaml or app/config/config.yml
 
 payum:
   gateways:
@@ -45,7 +45,7 @@ payum:
       certif_prod: 'change it' # required 
       certif_test: 'change it' # required 
       sandbox: true
-
+      hash_algorithm: 'algo-sha1' # or 'algo-hmac-sha256'
 ```
 
 ### With Payum
@@ -62,16 +62,24 @@ $payum = (new PayumBuilder())
     ->addDefaultStorages()
 
     ->addGateway('gatewayName', [
-        'factory'      => 'system_pay',
-        'vads_site_id' => 'change it',
-        'certif_prod'  => 'change it',
-        'certif_test'  => 'change it',
-        'sandbox'      => true,
+        'factory'        => 'system_pay',
+        'vads_site_id'   => 'change it', // required
+        'certif_prod'    => 'change it', // required
+        'certif_test'    => 'change it', // required
+        'sandbox'        => true,
+        'hash_algorithm' => 'algo-sha1' // or 'algo-hmac-sha256'
     ])
 
     ->getPayum()
 ;
 ```
+
+### Why `hash_algorithm` is prefixed by `algo-`?
+
+We wanted to use `sha1` or `hmac-256`, but there is currently a [Payum limitation](https://github.com/Payum/Payum/issues/692) which try to call `sha1` because it's a valid callable.
+
+As a workaround, the only easy solution we thought was to prefix them with `algo-`.
+Since `algo-sha1` is not a valid callable, there is no Payum issues and everything works well. 
 
 ## Usage
 

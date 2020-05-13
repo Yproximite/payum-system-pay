@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Yproximite\Payum\SystemPay;
 
-use Yproximite\Payum\SystemPay\Action\ConvertPaymentAction;
-use Yproximite\Payum\SystemPay\Action\CaptureAction;
-use Yproximite\Payum\SystemPay\Action\NotifyAction;
-use Yproximite\Payum\SystemPay\Action\StatusAction;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory;
+use Yproximite\Payum\SystemPay\Action\CaptureAction;
+use Yproximite\Payum\SystemPay\Action\ConvertPaymentAction;
+use Yproximite\Payum\SystemPay\Action\NotifyAction;
+use Yproximite\Payum\SystemPay\Action\StatusAction;
 use Yproximite\Payum\SystemPay\Request\RequestStatusApplier;
 
 class SystemPayGatewayFactory extends GatewayFactory
@@ -41,6 +41,11 @@ class SystemPayGatewayFactory extends GatewayFactory
                 'sandbox'                         => true,
                 'certif_prod'                     => null,
                 'certif_test'                     => null,
+
+                // Due to a limitation of Payum (https://github.com/Payum/Payum/issues/692),
+                // the algorithm hash can not be "sha1" because it's a callable and will make Payum fails.
+                // As a workaround, we prefix the algorithm hash by something and it's not seen a callable anymore.
+                'hash_algorithm' => SignatureGenerator::HASH_ALGORITHM_PREFIX.'sha1',
             ];
             $config->defaults($config['payum.default_options']);
             $config['payum.required_options'] = [

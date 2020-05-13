@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yproximite\Payum\SystemPay\Tests;
 
+use Payum\Core\Bridge\Guzzle\HttpClientFactory;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Yproximite\Payum\SystemPay\SystemPayGatewayFactory;
 
@@ -58,6 +59,7 @@ class SystemPayGatewayFactoryTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($config['payum.default_options']['sandbox']);
         $this->assertNull($config['payum.default_options']['certif_prod']);
         $this->assertNull($config['payum.default_options']['certif_test']);
+        $this->assertEquals('algo-sha1', $config['payum.default_options']['hash_algorithm']);
         $this->assertEquals([
             'vads_site_id',
             'vads_action_mode',
