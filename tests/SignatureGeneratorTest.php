@@ -42,10 +42,10 @@ class SignatureGeneratorTest extends TestCase
             ],
         ];
 
-        yield 'sha256' => [
+        yield 'hmac-sha256' => [
             'expectedSignature' => 'f8B2q09tV5R2aSVFkscjGMVemd56VUJsSxtErQZQaQs=',
             'certificate'       => '1122334455667788',
-            'hashAlgorithm'     => 'sha256',
+            'hashAlgorithm'     => 'hmac-sha256',
             'fields'            => [
                 'vads_trans_id'       => '000001',
                 'vads_trans_date'     => '20200513114252',

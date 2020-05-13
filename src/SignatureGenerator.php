@@ -26,8 +26,13 @@ class SignatureGenerator
 
         if ($hashAlgorithm === 'sha1') {
             return sha1($str);
+        } else if ($hashAlgorithm === 'hmac-sha256') {
+            return base64_encode(hash_hmac('sha256', $str, $certificate, true));
         }
 
-        return base64_encode(hash_hmac('sha256', $str, $certificate, true));
+        throw new \InvalidArgumentException(sprintf(
+            'Unknown algorithm hash "%s" used.',
+            $hashAlgorithm
+        ));
     }
 }
