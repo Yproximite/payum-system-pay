@@ -45,7 +45,7 @@ class SystemPayGatewayFactory extends GatewayFactory
                 // Due to a limitation of Payum (https://github.com/Payum/Payum/issues/692),
                 // the algorithm hash can not be "sha1" because it's a callable and will make Payum fails.
                 // As a workaround, we prefix the algorithm hash by something and it's not seen a callable anymore.
-                'hash_algorithm' => SignatureGenerator::HASH_ALGORITHM_PREFIX.'sha1',
+                'hash_algorithm' => SignatureAlgorithm::toPayumOption(SignatureAlgorithm::SHA1),
             ];
             $config->defaults($config['payum.default_options']);
             $config['payum.required_options'] = [
