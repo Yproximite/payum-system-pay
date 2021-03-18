@@ -78,6 +78,13 @@ class Api
     public const FIELD_VADS_CURRENCY = 'vads_currency';
 
     /**
+     * Transaction sequence number
+     *
+     * @see https://paiement.systempay.fr/doc/en-EN/form-payment/standard-payment/vads-sequence-number.html
+     */
+    public const FIELD_VADS_SEQUENCE_NUMBER = 'vads_sequence_number';
+
+    /**
      * Data acquisition mode of the credit card details. (input field, mandatory)
      */
     public const FIELD_VADS_ACTION_MODE = 'vads_action_mode';
@@ -121,6 +128,13 @@ class Api
      * URL of the page to notify at the end of payment. Overrides the value entered in the notification rules settings. (input field, optional)
      */
     public const FIELD_VADS_URL_CHECK = 'vads_url_check';
+
+    /**
+     * This parameter defines the source of the notification (also called IPN).
+     *
+     * @see https://paiement.systempay.fr/doc/en-EN/form-payment/standard-payment/vads-url-check-src.html
+     */
+    public const FIELD_VADS_URL_CHECK_SRC = 'vads_url_check_src';
 
     /**
      * Return code of the requested action. (output field)

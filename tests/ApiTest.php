@@ -36,12 +36,14 @@ class ApiTest extends TestCase
         yield [Api::FIELD_VADS_TRANS_STATUS, 'vads_trans_status'];
         yield [Api::FIELD_VADS_AMOUNT, 'vads_amount'];
         yield [Api::FIELD_VADS_CURRENCY, 'vads_currency'];
+        yield [Api::FIELD_VADS_SEQUENCE_NUMBER, 'vads_sequence_number'];
         yield [Api::FIELD_VADS_ACTION_MODE, 'vads_action_mode'];
         yield [Api::FIELD_VADS_PAGE_ACTION, 'vads_page_action'];
         yield [Api::FIELD_VADS_PAYMENT_CONFIG, 'vads_payment_config'];
         yield [Api::FIELD_VADS_VERSION, 'vads_version'];
         yield [Api::FIELD_VADS_URL_RETURN, 'vads_url_return'];
         yield [Api::FIELD_VADS_URL_CHECK, 'vads_url_check'];
+        yield [Api::FIELD_VADS_URL_CHECK_SRC, 'vads_url_check_src'];
         yield [Api::FIELD_VADS_RESULT, 'vads_result'];
         yield [Api::FIELD_VADS_CUSTOMER_ID, 'vads_cust_id'];
         yield [Api::FIELD_VADS_CUSTOMER_EMAIL, 'vads_cust_email'];
