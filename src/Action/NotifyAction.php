@@ -12,8 +12,9 @@ use Payum\Core\GatewayAwareTrait;
 use Payum\Core\Reply\HttpResponse;
 use Payum\Core\Request\GetHttpRequest;
 use Payum\Core\Request\Notify;
+use Yproximite\Payum\SystemPay\Action\Api\BaseApiAwareAction;
 
-class NotifyAction implements ActionInterface, GatewayAwareInterface
+class NotifyAction extends BaseApiAwareAction implements ActionInterface, GatewayAwareInterface
 {
     use GatewayAwareTrait;
 
@@ -29,6 +30,13 @@ class NotifyAction implements ActionInterface, GatewayAwareInterface
         $model = ArrayObject::ensureArrayObject($request->getModel());
 
         $this->gateway->execute($httpRequest = new GetHttpRequest());
+
+        $parameters = $httpRequest->request;
+        $signature = $this->api->getSignature($parameters);
+        if (!array_key_exists('signature', $parameters) || $parameters['signature'] !== $signature) {
+            throw new HttpResponse('Bad signature', 403);
+        }
+
         $model->replace($httpRequest->request);
 
         throw new HttpResponse('OK', 200);

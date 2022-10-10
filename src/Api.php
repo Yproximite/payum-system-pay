@@ -289,6 +289,14 @@ class Api
         throw new HttpPostRedirect($this->getApiEndpoint(), $details);
     }
 
+    /**
+     * @param array<string, mixed> $details
+     */
+    public function getSignature(array $details): string
+    {
+        return $this->signatureGenerator->generate($details, $this->getCertificate(), $this->getHashAlgorithm());
+    }
+
     protected function getApiEndpoint(): string
     {
         return 'https://paiement.systempay.fr/vads-payment/';
