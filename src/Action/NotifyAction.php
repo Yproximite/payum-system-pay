@@ -13,6 +13,7 @@ use Payum\Core\Reply\HttpResponse;
 use Payum\Core\Request\GetHttpRequest;
 use Payum\Core\Request\Notify;
 use Yproximite\Payum\SystemPay\Action\Api\BaseApiAwareAction;
+use Yproximite\Payum\SystemPay\Api;
 
 class NotifyAction extends BaseApiAwareAction implements ActionInterface, GatewayAwareInterface
 {
@@ -34,7 +35,16 @@ class NotifyAction extends BaseApiAwareAction implements ActionInterface, Gatewa
         $parameters = $httpRequest->request;
         $signature = $this->api->getSignature($parameters);
         if (!array_key_exists('signature', $parameters) || $parameters['signature'] !== $signature) {
-            throw new HttpResponse('Bad signature', 403);
+            // Dirty hack : when you are notified for a nth payment, system pay does not send the payment configuration but payum adds it from the details in bdd.
+            if (array_key_exists(Api::FIELD_VADS_PAYMENT_CONFIG, $parameters)) {
+                unset($parameters[Api::FIELD_VADS_PAYMENT_CONFIG]);
+                $signature = $this->api->getSignature($parameters);
+                if ($parameters['signature'] !== $signature) {
+                    throw new HttpResponse('Bad signature', 403);
+                }
+            } else {
+                throw new HttpResponse('Bad signature', 403);
+            }
         }
 
         $model->replace($httpRequest->request);
