@@ -4,14 +4,24 @@ declare(strict_types=1);
 
 namespace Yproximite\Payum\SystemPay\Tests\Action;
 
+use Http\Message\MessageFactory;
+use Payum\Core\HttpClientInterface;
 use Payum\Core\Reply\HttpResponse;
 use Payum\Core\Request\GetHttpRequest;
 use Payum\Core\Request\Notify;
-use Payum\Core\Tests\GenericActionTest;
 use Yproximite\Payum\SystemPay\Action\NotifyAction;
+use Yproximite\Payum\SystemPay\Api;
+use Yproximite\Payum\SystemPay\SignatureAlgorithm;
+use Yproximite\Payum\SystemPay\SignatureGenerator;
+use Yproximite\Payum\SystemPay\Tests\GenericActionTest;
 
 class NotifyActionTest extends GenericActionTest
 {
+    /**
+     * The certificate the notification data below is signed with.
+     */
+    private const CERTIFICATE = '1122334455667788';
+
     protected $requestClass = Notify::class;
 
     protected $actionClass = NotifyAction::class;
@@ -21,17 +31,7 @@ class NotifyActionTest extends GenericActionTest
      */
     public function shouldUpdateModelIfNotificationValid()
     {
-        $gatewayMock = $this->createGatewayMock();
-        $gatewayMock
-            ->expects($this->once())
-            ->method('execute')
-            ->with($this->isInstanceOf('Payum\Core\Request\GetHttpRequest'))
-            ->will($this->returnCallback(function (GetHttpRequest $request) {
-                $request->request = $this->provideNotificationData();
-            }));
-
-        $action = new NotifyAction();
-        $action->setGateway($gatewayMock);
+        $action = $this->createActionWithNotificationData($this->provideNotificationData());
 
         $model = new \ArrayObject([
             'vads_action_mode' => 'INTERACTIVE',
@@ -52,10 +52,64 @@ class NotifyActionTest extends GenericActionTest
         $this->fail('The exception is expected');
     }
 
+    /**
+     * @test
+     */
+    public function shouldNotUpdateModelIfSignatureInvalid()
+    {
+        $data              = $this->provideNotificationData();
+        $data['signature'] = 'anInvalidSignature';
+
+        $action = $this->createActionWithNotificationData($data);
+
+        $model = new \ArrayObject([
+            'vads_action_mode' => 'INTERACTIVE',
+            'vads_amount'      => '123',
+        ]);
+
+        try {
+            $action->execute(new Notify($model));
+        } catch (HttpResponse $reply) {
+            $this->assertEquals([
+                'vads_action_mode' => 'INTERACTIVE',
+                'vads_amount'      => '123',
+            ], (array) $model);
+
+            $this->assertSame(403, $reply->getStatusCode());
+            $this->assertSame('Bad signature', $reply->getContent());
+
+            return;
+        }
+
+        $this->fail('The exception is expected');
+    }
+
+    private function createActionWithNotificationData(array $data): NotifyAction
+    {
+        $gatewayMock = $this->createGatewayMock();
+        $gatewayMock
+            ->expects($this->once())
+            ->method('execute')
+            ->with($this->isInstanceOf('Payum\Core\Request\GetHttpRequest'))
+            ->will($this->returnCallback(function (GetHttpRequest $request) use ($data) {
+                $request->request = $data;
+            }));
+
+        $action = new NotifyAction();
+        $action->setGateway($gatewayMock);
+        $action->setApi(new Api([
+            'sandbox'        => true,
+            'certif_test'    => self::CERTIFICATE,
+            'certif_prod'    => 'theProdCertificate',
+            'hash_algorithm' => SignatureAlgorithm::toPayumOption(SignatureAlgorithm::SHA1),
+        ], new SignatureGenerator(), $this->createMock(HttpClientInterface::class), $this->createMock(MessageFactory::class)));
+
+        return $action;
+    }
+
     protected function provideNotificationData(): array
     {
-        return [
-            'signature'                    => '833d20ce6b2c27dd054c289f7ba22a26aaf3350d',
+        $data = [
             'vads_action_mode'             => 'INTERACTIVE',
             'vads_amount'                  => '123',
             'vads_auth_mode'               => 'FULL',
@@ -108,5 +162,7 @@ class NotifyActionTest extends GenericActionTest
             'vads_version'                 => 'V2',
             'vads_warranty_result'         => 'YES',
         ];
+
+        return ['signature' => (new SignatureGenerator())->generate($data, self::CERTIFICATE)] + $data;
     }
 }

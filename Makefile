@@ -25,42 +25,11 @@ help:
 # Environment #
 ###############
 
-## Setup environment
-setup:
-	vagrant up --no-provision
-	vagrant provision
-	vagrant ssh -- "cd /srv/app && make install-app"
-
-## Update environment
-update: export ANSIBLE_TAGS = manala.update
-update:
-	vagrant provision
-
-## Update ansible
-update-ansible: export ANSIBLE_TAGS = manala.update
-update-ansible:
-	vagrant provision --provision-with ansible
-
-## Provision environment
-provision: export ANSIBLE_EXTRA_VARS = {"manala":{"update":false}}
-provision:
-	vagrant provision --provision-with app
-
-## Provision nginx
-provision-nginx: export ANSIBLE_TAGS = manala_nginx
-provision-nginx: provision
-
-## Provision php
-provision-php: export ANSIBLE_TAGS = manala_php
-provision-php: provision
-
-############
-# Commands #
-############
-
-install-app: install-git-hooks
+## Install dependencies and git hooks
+install: install-git-hooks
 	composer install
 
+## Install git hooks
 install-git-hooks:
 	wget --output-document=.git/hooks/pre-commit https://gist.githubusercontent.com/tristanbes/6f968b45d40fbf9da144bf86f8846d32/raw/0dfc2c44a10678dbeaad29e538b8a6d2d00fa496/pre-commit
 	chmod +x .git/hooks/pre-commit
@@ -78,7 +47,7 @@ run-phpunit:
 run-php-cs-fixer:
 	php bin/php-cs-fixer fix
 
-run-php-cs-fixer@travis:
+run-php-cs-fixer@ci:
 	php bin/php-cs-fixer fix -v --diff --dry-run
 
 run-composer-validate:

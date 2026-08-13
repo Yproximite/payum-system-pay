@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Yproximite\Payum\SystemPay\Tests\Action;
 
 use Payum\Core\Action\GetCurrencyAction;
+use Payum\Core\Model\Payment;
 use Payum\Core\Model\PaymentInterface;
 use Payum\Core\Request\Convert;
 use Payum\Core\Request\GetCurrency;
-use Payum\Core\Tests\GenericActionTest;
-use Payum\Core\Tests\Mocks\Entity\Payment;
 use Yproximite\Payum\SystemPay\Action\ConvertPaymentAction;
+use Yproximite\Payum\SystemPay\Tests\GenericActionTest;
 
 class ConvertPaymentActionTest extends GenericActionTest
 {
@@ -18,14 +18,14 @@ class ConvertPaymentActionTest extends GenericActionTest
 
     protected $actionClass = ConvertPaymentAction::class;
 
-    public function provideSupportedRequests()
+    public function provideSupportedRequests(): \Iterator
     {
         yield [new $this->requestClass(new Payment(), 'array')];
         yield [new $this->requestClass($this->createMock(PaymentInterface::class), 'array')];
         yield [new $this->requestClass(new Payment(), 'array', $this->createMock('Payum\Core\Security\TokenInterface'))];
     }
 
-    public function provideNotSupportedRequests()
+    public function provideNotSupportedRequests(): \Iterator
     {
         yield ['foo'];
         yield [['foo']];
@@ -71,7 +71,7 @@ class ConvertPaymentActionTest extends GenericActionTest
         $this->assertSame('000354', $details['vads_trans_id']);
 
         $this->assertArrayHasKey('vads_trans_date', $details);
-        $this->assertRegExp('#^20[0-9]{2}\d{2}\d{2}\d{2}\d{2}\d{2}$#', $details['vads_trans_date']);
+        $this->assertMatchesRegularExpression('#^20[0-9]{2}\d{2}\d{2}\d{2}\d{2}\d{2}$#', $details['vads_trans_date']);
 
         $this->assertArrayHasKey('vads_amount', $details);
         $this->assertSame(123, $details['vads_amount']);

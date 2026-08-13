@@ -3,11 +3,11 @@
 > A Payum gateway to use [SystemPay](https://paiement.systempay.fr) (a French payment system)
 
 [![Latest Stable Version](https://poser.pugx.org/yproximite/payum-system-pay/version)](https://packagist.org/packages/yproximite/payum-system-pay)
-[![Build Status](https://travis-ci.com/Yproximite/payum-system-pay.svg?token=pNBs2oaRpfxdyhqWf28h&branch=master)](https://travis-ci.com/Yproximite/payum-system-pay)
+[![CI](https://github.com/Yproximite/payum-system-pay/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Yproximite/payum-system-pay/actions/workflows/ci.yml)
 
 ## Requirements
 
-- PHP 7.2+
+- PHP 8.1+
 - [Payum](https://github.com/Payum/Payum)
 - Optionally [PayumBundle](https://github.com/Payum/PayumBundle) and Symfony 3 or 4+
 

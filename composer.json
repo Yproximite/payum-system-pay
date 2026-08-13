@@ -3,14 +3,17 @@
     "description": "SP Plus gateway for Payum",
     "keywords": ["payum", "payment", "sp plus"],
     "license": "MIT",
+    "require": {
+        "php": ">=8.1",
+        "payum/core": "^1.7",
+        "php-http/message-factory": "^1.1"
+    },
     "require-dev": {
-        "payum/core": "^1.5.1",
-        "php-http/guzzle6-adapter": "^1.0",
-        "phpstan/phpstan": "^0.11.1",
-        "phpstan/phpstan-strict-rules": "^0.11.0",
-        "friendsofphp/php-cs-fixer": "^2.16",
-        "phpunit/phpunit": "^7.5",
-        "twig/twig": "^2.6"
+        "php-http/guzzle7-adapter": "^1.0",
+        "phpstan/phpstan": "^1.11",
+        "phpstan/phpstan-strict-rules": "^1.6",
+        "friendsofphp/php-cs-fixer": "^3.59",
+        "phpunit/phpunit": "^9.6"
     },
     "config": {
         "bin-dir": "bin"
@@ -27,13 +30,11 @@
     },
     "archive": {
         "exclude": [
-            "ansible",
-            ".php_cs",
-            ".travis.yml",
+            ".github",
+            ".php-cs-fixer.dist.php",
             "Makefile",
             "phpstan.neon",
-            "phpunit.xml",
-            "Vagrantfile"
+            "phpunit.xml"
         ]
     }
 }

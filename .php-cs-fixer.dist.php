@@ -4,7 +4,7 @@ $finder = PhpCsFixer\Finder::create()
     ->in([__DIR__.'/src'])
     ->name('*.php');
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
@@ -12,12 +12,14 @@ return PhpCsFixer\Config::create()
             'syntax' => 'short',
         ],
         'binary_operator_spaces' => [
-            'align_double_arrow' => true,
-            'align_equals' => true
+            'operators' => [
+                '=>' => 'align',
+                '=' => 'align',
+            ],
         ],
         'no_unreachable_default_argument_value' => false,
-        'braces' => [
-            'allow_single_line_closure' => true,
+        'braces_position' => [
+            'allow_single_line_anonymous_functions' => true,
         ],
         'heredoc_to_nowdoc' => false,
         'phpdoc_summary' => false,
