@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### BREAKING CHANGES
+
+- PHP 8.1+ is now required. Composer refuses by default to install packages under a security advisory, and the first advisory-free Twig — a hard requirement of `payum/core` — is 3.27.0, which needs PHP >= 8.1 ([#28](https://github.com/Yproximite/payum-system-pay/pull/28))
+- `payum/core` moved from `require-dev` to `require`, where it belongs for a library, and is now constrained to `^1.7` ([#28](https://github.com/Yproximite/payum-system-pay/pull/28))
+
 ## 2.0.0
 
 ### BREAKING CHANGES
