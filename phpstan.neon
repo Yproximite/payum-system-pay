@@ -1,7 +1,13 @@
 includes:
 	- vendor/phpstan/phpstan-strict-rules/rules.neon
+	- phpstan-baseline.neon
 
 parameters:
+	level: max
+
+	paths:
+		- src
+
 	ignoreErrors:
-	    # Payum interfaces
-		- '#Method Yproximite\\Payum\\SystemPay\\Action\\[A-Za-z]+Action::execute\(\) has no return typehint specified\.#'
+	    # Payum interfaces
+		- '#Method Yproximite\\Payum\\SystemPay\\Action\\[A-Za-z]+Action::execute\(\) has no return type specified\.#'

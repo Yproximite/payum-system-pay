@@ -22,8 +22,6 @@ class NotifyAction extends BaseApiAwareAction implements ActionInterface, Gatewa
     private $ignorableParameters = [Api::FIELD_VADS_PAYMENT_CONFIG, Api::FIELD_VADS_ACTION_MODE];
 
     /**
-     * {@inheritdoc}
-     *
      * @param Notify $request
      */
     public function execute($request)
@@ -44,14 +42,11 @@ class NotifyAction extends BaseApiAwareAction implements ActionInterface, Gatewa
         throw new HttpResponse('OK', 200);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports($request)
     {
         return
-            $request instanceof Notify &&
-            $request->getModel() instanceof \ArrayAccess;
+            $request instanceof Notify
+            && $request->getModel() instanceof \ArrayAccess;
     }
 
     private function isValidSignature($parameters)
@@ -60,7 +55,7 @@ class NotifyAction extends BaseApiAwareAction implements ActionInterface, Gatewa
             return false;
         }
 
-        $signature = $parameters['signature'];
+        $signature         = $parameters['signature'];
         $computedSignature = $this->api->getSignature($parameters);
         if ($signature === $computedSignature) {
             return true;

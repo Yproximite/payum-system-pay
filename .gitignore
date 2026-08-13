@@ -1,14 +1,14 @@
 .idea/
 vendor/
 
-# VM & Ansible
-.vagrant/
-ansible/roles/.downloads
-ansible/roles/manala.*
+composer.lock
 
-# Binaries
+# Binaries
 bin/*
 !bin/.gitkeep
 
-# PHP-CS-Fixer
-.php_cs.cache
+# PHP-CS-Fixer
+.php-cs-fixer.cache
+
+# PHPUnit
+.phpunit.result.cache

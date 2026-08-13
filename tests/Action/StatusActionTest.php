@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yproximite\Payum\SystemPay\Tests\Action;
 
 use Payum\Core\Request\GetHumanStatus;
-use Payum\Core\Tests\GenericActionTest;
+use Yproximite\Payum\SystemPay\Tests\GenericActionTest;
 use Yproximite\Payum\SystemPay\Action\StatusAction;
 use Yproximite\Payum\SystemPay\Request\RequestStatusApplier;
 
@@ -14,17 +14,9 @@ class StatusActionTest extends GenericActionTest
     protected $requestClass = GetHumanStatus::class;
     protected $actionClass  = StatusAction::class;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->action = new $this->actionClass(new RequestStatusApplier());
-    }
-
-    /**
-     * @test
-     */
-    public function couldBeConstructedWithoutAnyArguments()
-    {
-        // override
     }
 
     /**

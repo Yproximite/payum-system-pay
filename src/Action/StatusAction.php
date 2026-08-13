@@ -22,8 +22,6 @@ class StatusAction implements ActionInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param GetStatusInterface $request
      */
     public function execute($request)
@@ -35,13 +33,10 @@ class StatusAction implements ActionInterface
         $this->requestStatusApplier->apply($model[Api::FIELD_VADS_TRANS_STATUS], $request);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports($request)
     {
         return
-            $request instanceof GetStatusInterface &&
-            $request->getModel() instanceof \ArrayAccess;
+            $request instanceof GetStatusInterface
+            && $request->getModel() instanceof \ArrayAccess;
     }
 }

@@ -22,14 +22,29 @@ class SystemPayGatewayFactoryTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @test
-     * @expectedException \Payum\Core\Exception\LogicException
-     * @expectedExceptionMessage The vads_site_id, certif_test, certif_prod fields are required.
      */
     public function shouldThrowIfRequiredOptionsAreNotPassed()
     {
+        $this->expectException(\Payum\Core\Exception\LogicException::class);
+        $this->expectExceptionMessage('The vads_site_id, certif_test, certif_prod fields are required.');
+
         $factory = new SystemPayGatewayFactory();
 
         $factory->create();
+    }
+
+    /**
+     * @test
+     */
+    public function shouldCreateGatewayFromRequiredOptions()
+    {
+        $gateway = (new SystemPayGatewayFactory())->create([
+            'vads_site_id' => '12345678',
+            'certif_test'  => 'theTestCertificate',
+            'certif_prod'  => 'theProdCertificate',
+        ]);
+
+        $this->assertInstanceOf('Payum\Core\GatewayInterface', $gateway);
     }
 
     /**

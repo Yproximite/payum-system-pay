@@ -321,9 +321,6 @@ class Api
         return SignatureAlgorithm::fromPayumOption($this->options['hash_algorithm']);
     }
 
-    /**
-     * @return mixed
-     */
     protected function getOption(array $details, string $name)
     {
         if (array_key_exists($name, $details)) {

@@ -14,9 +14,6 @@ use Yproximite\Payum\SystemPay\Request\RequestStatusApplier;
 
 class SystemPayGatewayFactory extends GatewayFactory
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function populateConfig(ArrayObject $config): void
     {
         $config->defaults([

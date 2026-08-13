@@ -1,0 +1,151 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Cannot call method doPayment\\(\\) on mixed\\.$#"
+			count: 1
+			path: src/Action/CaptureAction.php
+
+		-
+			message: "#^Cannot call method getTargetUrl\\(\\) on Payum\\\\Core\\\\Security\\\\TokenInterface\\|null\\.$#"
+			count: 1
+			path: src/Action/CaptureAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$request \\(Payum\\\\Core\\\\Request\\\\Capture\\) of method Yproximite\\\\Payum\\\\SystemPay\\\\Action\\\\CaptureAction\\:\\:execute\\(\\) should be contravariant with parameter \\$request \\(mixed\\) of method Payum\\\\Core\\\\Action\\\\ActionInterface\\:\\:execute\\(\\)$#"
+			count: 2
+			path: src/Action/CaptureAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$request \\(Payum\\\\Core\\\\Request\\\\Convert\\) of method Yproximite\\\\Payum\\\\SystemPay\\\\Action\\\\ConvertPaymentAction\\:\\:execute\\(\\) should be contravariant with parameter \\$request \\(mixed\\) of method Payum\\\\Core\\\\Action\\\\ActionInterface\\:\\:execute\\(\\)$#"
+			count: 1
+			path: src/Action/ConvertPaymentAction.php
+
+		-
+			message: "#^Cannot call method getSignature\\(\\) on mixed\\.$#"
+			count: 2
+			path: src/Action/NotifyAction.php
+
+		-
+			message: "#^Method Yproximite\\\\Payum\\\\SystemPay\\\\Action\\\\NotifyAction\\:\\:isValidSignature\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Action/NotifyAction.php
+
+		-
+			message: "#^Method Yproximite\\\\Payum\\\\SystemPay\\\\Action\\\\NotifyAction\\:\\:isValidSignature\\(\\) has parameter \\$parameters with no type specified\\.$#"
+			count: 1
+			path: src/Action/NotifyAction.php
+
+		-
+			message: "#^Method Yproximite\\\\Payum\\\\SystemPay\\\\Action\\\\NotifyAction\\:\\:isValidSignatureWithoutParameter\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Action/NotifyAction.php
+
+		-
+			message: "#^Method Yproximite\\\\Payum\\\\SystemPay\\\\Action\\\\NotifyAction\\:\\:isValidSignatureWithoutParameter\\(\\) has parameter \\$parameter with no type specified\\.$#"
+			count: 1
+			path: src/Action/NotifyAction.php
+
+		-
+			message: "#^Method Yproximite\\\\Payum\\\\SystemPay\\\\Action\\\\NotifyAction\\:\\:isValidSignatureWithoutParameter\\(\\) has parameter \\$parameters with no type specified\\.$#"
+			count: 1
+			path: src/Action/NotifyAction.php
+
+		-
+			message: "#^Method Yproximite\\\\Payum\\\\SystemPay\\\\Action\\\\NotifyAction\\:\\:isValidSignatureWithoutParameter\\(\\) has parameter \\$signature with no type specified\\.$#"
+			count: 1
+			path: src/Action/NotifyAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$request \\(Payum\\\\Core\\\\Request\\\\Notify\\) of method Yproximite\\\\Payum\\\\SystemPay\\\\Action\\\\NotifyAction\\:\\:execute\\(\\) should be contravariant with parameter \\$request \\(mixed\\) of method Payum\\\\Core\\\\Action\\\\ActionInterface\\:\\:execute\\(\\)$#"
+			count: 2
+			path: src/Action/NotifyAction.php
+
+		-
+			message: "#^Property Yproximite\\\\Payum\\\\SystemPay\\\\Action\\\\NotifyAction\\:\\:\\$ignorableParameters has no type specified\\.$#"
+			count: 1
+			path: src/Action/NotifyAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$request \\(Payum\\\\Core\\\\Request\\\\GetStatusInterface\\) of method Yproximite\\\\Payum\\\\SystemPay\\\\Action\\\\StatusAction\\:\\:execute\\(\\) should be contravariant with parameter \\$request \\(mixed\\) of method Payum\\\\Core\\\\Action\\\\ActionInterface\\:\\:execute\\(\\)$#"
+			count: 1
+			path: src/Action/StatusAction.php
+
+		-
+			message: "#^Parameter \\#1 \\$status of method Yproximite\\\\Payum\\\\SystemPay\\\\Request\\\\RequestStatusApplier\\:\\:apply\\(\\) expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/Action/StatusAction.php
+
+		-
+			message: "#^Method Yproximite\\\\Payum\\\\SystemPay\\\\Api\\:\\:__construct\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Api.php
+
+		-
+			message: "#^Method Yproximite\\\\Payum\\\\SystemPay\\\\Api\\:\\:doPayment\\(\\) has parameter \\$details with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Api.php
+
+		-
+			message: "#^Method Yproximite\\\\Payum\\\\SystemPay\\\\Api\\:\\:getOption\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Api.php
+
+		-
+			message: "#^Method Yproximite\\\\Payum\\\\SystemPay\\\\Api\\:\\:getOption\\(\\) has parameter \\$details with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Api.php
+
+		-
+			message: "#^Property Yproximite\\\\Payum\\\\SystemPay\\\\Api\\:\\:\\$options type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Api.php
+
+		-
+			message: "#^Method Yproximite\\\\Payum\\\\SystemPay\\\\PaymentConfigGenerator\\:\\:isMultiByDateIsValid\\(\\) has parameter \\$input with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/PaymentConfigGenerator.php
+
+		-
+			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/PaymentConfigGenerator.php
+
+		-
+			message: "#^PHPDoc tag @var for property Yproximite\\\\Payum\\\\SystemPay\\\\Request\\\\RequestStatusApplier\\:\\:\\$appliers contains unresolvable type\\.$#"
+			count: 1
+			path: src/Request/RequestStatusApplier.php
+
+		-
+			message: "#^Property Yproximite\\\\Payum\\\\SystemPay\\\\Request\\\\RequestStatusApplier\\:\\:\\$appliers type has no value type specified in iterable type array\\<string, mixed\\>\\.$#"
+			count: 1
+			path: src/Request/RequestStatusApplier.php
+
+		-
+			message: "#^Method Yproximite\\\\Payum\\\\SystemPay\\\\SignatureGenerator\\:\\:generate\\(\\) has parameter \\$fields with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/SignatureGenerator.php
+
+		-
+			message: "#^Parameter \\#1 \\$input of method Payum\\\\Core\\\\Bridge\\\\Spl\\\\ArrayObject\\:\\:defaults\\(\\) expects array\\|Traversable, mixed given\\.$#"
+			count: 1
+			path: src/SystemPayGatewayFactory.php
+
+		-
+			message: "#^Parameter \\#1 \\$requestStatusApplier of class Yproximite\\\\Payum\\\\SystemPay\\\\Action\\\\StatusAction constructor expects Yproximite\\\\Payum\\\\SystemPay\\\\Request\\\\RequestStatusApplier, mixed given\\.$#"
+			count: 1
+			path: src/SystemPayGatewayFactory.php
+
+		-
+			message: "#^Parameter \\#1 \\$required of method Payum\\\\Core\\\\Bridge\\\\Spl\\\\ArrayObject\\:\\:validateNotEmpty\\(\\) expects array, mixed given\\.$#"
+			count: 1
+			path: src/SystemPayGatewayFactory.php
+
+		-
+			message: "#^Parameter \\#3 \\$client of class Yproximite\\\\Payum\\\\SystemPay\\\\Api constructor expects Payum\\\\Core\\\\HttpClientInterface, mixed given\\.$#"
+			count: 1
+			path: src/SystemPayGatewayFactory.php
+
+		-
+			message: "#^Parameter \\#4 \\$messageFactory of class Yproximite\\\\Payum\\\\SystemPay\\\\Api constructor expects Http\\\\Message\\\\MessageFactory, mixed given\\.$#"
+			count: 1
+			path: src/SystemPayGatewayFactory.php
